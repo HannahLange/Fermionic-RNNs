@@ -18,12 +18,11 @@ def get_particle_no(samples, model, device):
     Nx = samples.size()[1]
     Ny = samples.size()[2]
     N = torch.zeros((samples.size()[0]))
-    for n in range(samples.size()[0]):
-        for j in range(Ny):
-            for i in range(Nx):
-                if samples[n,i,j]==2 or samples[n,i,j]==1:
-                    N[n] += 1
-    return N    
+    for j in range(Ny):
+        for i in range(Nx):
+            N[samples[:,i,j]==2] += 1
+            N[samples[:,i,j]==1] += 1
+    return N.detach()
 
 def get_szsz(samples, log_probs, boundaries, model, device):
     Nx, Ny, length_x, length_y = get_length(samples, boundaries)
@@ -95,19 +94,21 @@ def get_sz_(samples, model, device):
     # used in the cost function, no averaging here!
     Nx = samples.size()[1]
     Ny = samples.size()[2]
-    sz = torch.zeros((samples.size()[0], Nx, Ny)).to(device) 
-    s = samples.clone().detach() 
-    s[samples == 1] = -1/2
-    s[samples == 2] = 1/2
-    return torch.sum(torch.sum(sz, axis=2), axis=1) 
+    sz = torch.zeros((samples.size()[0])).to(device).to(torch.float32) 
+    for i in range(Nx):
+        for j in range(Ny):
+            sz[samples[:,i,j] == 1] += -1/2   
+            sz[samples[:,i,j] == 2] += 1/2
+    return sz 
 
 def get_sz(samples, model, device):
     Nx = samples.size()[1]
     Ny = samples.size()[2]
-    sz = torch.zeros((samples.size()[0], Nx, Ny)).to(device) 
-    s = samples.clone().detach() 
-    s[samples == 1] = -1/2
-    s[samples == 2] = 1/2
+    sz = torch.zeros((samples.size()[0])).to(device).to(torch.float32) 
+    for i in range(Nx):
+        for j in range(Ny):
+            sz[samples[:,i,j] == 1] += -1/2
+            sz[samples[:,i,j] == 2] += 1/2
     return torch.sum(torch.mean(sz, axis=0)) 
 
 def get_sx(samples, log_probs, phases, model, device):
