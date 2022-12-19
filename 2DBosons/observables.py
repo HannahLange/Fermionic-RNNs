@@ -84,7 +84,7 @@ def get_sz_(samples, model, device):
     s = samples.clone().detach() 
     s[samples == 0] = -1
     sz = s.to(torch.float64)
-    return torch.sum(torch.sum(sz, axis=2), axis=1) *1/2 
+    return torch.sum(torch.sum(sz, axis=2), axis=1).detach() *1/2 
 
 def get_sz(samples, model, device):
     Nx = samples.size()[1]
@@ -93,7 +93,7 @@ def get_sz(samples, model, device):
     s = samples.clone().detach() 
     s[samples == 0] = -1
     sz = s.to(torch.float64)
-    return torch.sum(torch.mean(sz, axis=0)*1/2) / (Nx*Ny)
+    return torch.sum(torch.mean(sz, axis=0)*1/2).detach() / (Nx*Ny)
 
 def get_sx(samples, log_probs, phases, model, device):
     Nx = samples.size()[1]
@@ -104,7 +104,7 @@ def get_sx(samples, log_probs, phases, model, device):
             s1 = flip_spin(samples, i,j)
             log_probs1, phases1 = model.log_probabilities(s1)
             sx[:,i,j] = torch.exp(0.5*(log_probs1-log_probs))*torch.exp(1j*(phases1-phases))
-    return torch.sum(torch.mean(sx, axis=0)*1/2) / (Nx*Ny)
+    return torch.sum(torch.mean(sx, axis=0)*1/2).detach() / (Nx*Ny)
 
 def get_sy(samples, log_probs, phases, model, device):
     Nx = samples.size()[1]
@@ -118,7 +118,7 @@ def get_sy(samples, log_probs, phases, model, device):
             s1[:,i,j][s1[:,i,j] == 1] = -1j
             s1[:,i,j][s1[:,i,j] == 0] = 1j
             sy[:,i,j] = torch.exp(0.5*(log_probs1-log_probs))*torch.exp(1j*(phases1-phases))*s1[:,i,j]
-    return torch.sum(torch.mean(sy, axis=0)*1/2) / (Nx*Ny)
+    return torch.sum(torch.mean(sy, axis=0)*1/2).detach() / (Nx*Ny)
 
 
 def flip_neighbor_spins(samples, i,j, direction, Nx, Ny):

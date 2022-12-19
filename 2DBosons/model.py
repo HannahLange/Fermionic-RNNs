@@ -165,7 +165,7 @@ class Model(nn.Module):
                 inputs[str(nx)+str(ny)] = sigma
                 hidden_inputs[str(nx)+str(ny)] = self.init_hidden(num_samples)
         
-        samples     = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
+        samples = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
         for ny in range(self.N_y):
             if ny % 2 == 0: #go from left to right
                 for nx in range(self.N_x):
@@ -208,7 +208,6 @@ class Model(nn.Module):
         samples = samples.to(self.device)
         num_samples = samples.size()[0]
         samples = samples.clone().detach()
-        samples = [[samples[:,nx,ny] for ny in range(self.N_y)] for nx in range(self.N_x)]
         
         # generate a first input of zeros (sigma and hidden states) to the first GRU cell at t=0
         sigma  = torch.zeros((num_samples,2), dtype=torch.float64).to(self.device)
@@ -226,13 +225,13 @@ class Model(nn.Module):
             if ny % 2 == 0: #go from left to right
                 for nx in range(self.N_x):
                     direction = [-1,-1]
-                    sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden_inputs[str(nx)+str(ny)] = self._gen_probs(nx, ny, direction, samples[nx][ny], inputs, hidden_inputs)
+                    sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden_inputs[str(nx)+str(ny)] = self._gen_probs(nx, ny, direction, samples[:,nx,ny], inputs, hidden_inputs)
                     ohs[nx][ny] = sigma
                     inputs[str(nx)+str(ny)] = sigma
             else: #go from right to left
                 for nx in range(self.N_x-1, -1, -1):
                     direction = [1,-1]
-                    sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden_inputs[str(nx)+str(ny)] = self._gen_probs(nx, ny, direction, samples[nx][ny], inputs, hidden_inputs)
+                    sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden_inputs[str(nx)+str(ny)] = self._gen_probs(nx, ny, direction, samples[:,nx,ny], inputs, hidden_inputs)
                     ohs[nx][ny] = sigma
                     inputs[str(nx)+str(ny)] = sigma
         ampl_probs = torch.cat([torch.stack(a, axis=1) for a in ampl_probs], axis=1) #.reshape((num_samples, self.N_x*self.N_y, 2))

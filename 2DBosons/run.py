@@ -25,8 +25,7 @@ def save(model, boundaries, folder, device):
     
 def cost_fct(samples, model, Jp1, Jz1, Jp2, Jz2, boundaries, sz_tot=None, symmetry=None):
     if symmetry != None:
-        Eloc, log_probs, phases, sym_samples, sym_log_probs, sym_phases = XXZ2D_Eloc(Jp1, Jz1, Jp2, Jz2, 
-samples, model, boundaries, symmetry)
+        Eloc, log_probs, phases, sym_samples, sym_log_probs, sym_phases = XXZ2D_Eloc(Jp1, Jz1, Jp2, Jz2, samples, model, boundaries, symmetry)
         sym_log_psi = (0.5*sym_log_probs+1j*sym_phases)
     else:
         Eloc, log_probs, phases = XXZ2D_Eloc(Jp1, Jz1, Jp2, Jz2, samples, model, boundaries, symmetry)
@@ -74,10 +73,11 @@ load_model = False
 n_samples   = 200
 sym         = None
 n_epochs    = 1000
-lr          = 0.01
-lr_decay    = 200
+max_grad    = 1000
+lr          = 0.001
+lr_decay    = 500
 lr_thresh   = 0.0005
-hiddendim   = min(int(Nx*Ny/2),20)
+hiddendim   = min(int(Nx*Ny/2),15)
 
 if Jp2 == 0 and Jz2 == 0:
     fol = str(Nx)+"x"+str(Ny)+"_qubits/Jp="+str(float(Jp1))+"Jz="+str(float(Jz1))+"/"
@@ -99,15 +99,24 @@ Elocs = []
 for epoch in range(1, n_epochs + 1):
     start = timeit.default_timer()
     optimizer.param_groups[0]['lr'] = max(lr_thresh, lr/(1+epoch/lr_decay))
+    start1 = timeit.default_timer() 
     samples = model.sample(n_samples)
+    end1 = timeit.default_timer()
+    print("Time for sampling: "+str(end1-start1))
     optimizer.zero_grad() # Clears existing gradients from previous epoch
+    start1 = timeit.default_timer() 
     Eloc, cost, log_probs, phases = cost_fct(samples, model, Jp1, Jz1, Jp2, Jz2, bounds, sz_tot=0, symmetry=sym)
+    end1 = timeit.default_timer()
+    print("Time for calculating Eloc: "+str(end1-start1))
+    if max_grad != None:
+        if torch.abs(cost) > max_grad:
+            cost = cost/torch.abs(cost)*max_grad
+    start1 = timeit.default_timer() 
     cost.backward() # Does backpropagation and calculates gradients
     optimizer.step() # Updates the weights accordingly
+    end1 = timeit.default_timer()
+    print("Time for calculating gradient and performing the step: "+str(end1-start1))
     optimizer.zero_grad()
-    sx = o.get_sx(samples, log_probs, phases, model, device)
-    sy = o.get_sy(samples, log_probs, phases, model, device)
-    sz = o.get_sz(samples, model, device)
     if (epoch >= 1/3*n_epochs) and sym == None:
         print("Use spatial symmetry from now.")
         if Jp2 == 0 and Jz2 == 0: #square lattice 
@@ -117,10 +126,12 @@ for epoch in range(1, n_epochs + 1):
     Elocs = (Eloc).mean(axis=0)
     end = timeit.default_timer()
     if epoch%10 == 0 or epoch == 1:
-        print('Epoch: {}/ {}/ t/epoch={}.............'.format(epoch, n_epochs, round(end-start,2)), 
-end=' ')
+        sx = o.get_sx(samples, log_probs, phases, model, device)
+        sy = o.get_sy(samples, log_probs, phases, model, device)
+        sz = o.get_sz(samples, model, device)
+        print('Epoch: {}/ {}/ t/epoch={}.............'.format(epoch, n_epochs, round(end-start,2)), end=' ')
         print("Loss: {:.8f}".format(cost)+", mean(E): {:.8f}".format((Eloc).mean(axis=0))+", var(E): {:.8f}".format((Eloc).var(axis=0))+", Sx: {:.4f}".format(sx)+", Sy: {:.4f}".format(sy)+", Sz: {:.4f}".format(sz))
-    del cost, samples
+    if epoch != n_epochs: del cost, samples, log_probs, phases, Elocs, Eloc
 # ----------- save -----------------------------------
 save(model, bounds, fol, device)
 np.save(fol+"/Eloc.npy", np.array(Elocs.detach().numpy()))

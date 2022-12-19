@@ -1,5 +1,5 @@
 import torch
-
+import timeit 
 
 def XXZ2D_MatrixElements(Jp1, Jz1, Jp2, Jz2, samples, length_x, length_y, device):
     """ 
@@ -139,7 +139,10 @@ def XXZ2D_Eloc(Jp1, Jz1, Jp2, Jz2, samples, RNN, boundaries, symmetry):
     queue_samples[0] = samples
     queue_samples[1:length+1] = new_samples
     queue_samples_reshaped = torch.reshape(queue_samples, [queue_samples.size()[0]*numsamples, Nx, Ny])
+    start = timeit.default_timer()
     log_probs, phases = RNN.log_probabilities(queue_samples_reshaped.to(torch.int64))
+    end = timeit.default_timer()
+    print("Time for probabilities: "+str(end-start))
     log_probs_reshaped = torch.reshape(log_probs, (queue_samples.size()[0],numsamples)).to(torch.complex64)
     phases_reshaped = torch.reshape(phases, (queue_samples.size()[0],numsamples))
     if Jp1 != 0 or Jp2 != 0: #off-diagonal elements
