@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 import numpy as np
+import timeit
 
 
 class TensorizedGRU(nn.Module):
@@ -53,10 +54,8 @@ class TensorizedGRU(nn.Module):
         # prepare input linear combination
         state_mul1 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W1) # [batch_sz, num_units]
         state_mul2 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W2) # [batch_sz, num_units]
-
         u = self.sigmoid(state_mul2 + self.b2)
         state_tilda = self.tanh(state_mul1 + self.b1) 
-
         new_state = u*state_tilda 
         new_state += (1.-u)*torch.einsum('ij,jk->ik', torch.concat((states[0], states[1]), 1), self.W3)
         output = new_state
@@ -93,7 +92,7 @@ class Model(nn.Module):
         self.soft = nn.Softsign()
         
         self.get_num_parameters()
-        
+ 
     def forward(self, x, hidden):
         """
         Passes the input through the network.
@@ -104,7 +103,6 @@ class Model(nn.Module):
             - out:    output configuration at t+1
             - hidden: hidden state at t+1
         """
-        
         # Passing in the input and hidden state into the model and obtaining outputs
         out, hidden = self.rnn(x, hidden)
         
@@ -132,7 +130,16 @@ class Model(nn.Module):
         print("Total number of parameters in the network: "+str(p))
         return p
     
-    def _gen_samples(self, nx, ny, direction, inputs, hidden_inputs, numsamples):
+    def enforce_N_total(self, N_tot, Nup, Ndn, amplitudes):
+        N = Nup + Ndn
+        bl_N = N_tot*torch.ones((amplitudes.size()[0],1))
+        ampl_p = torch.heaviside(bl_N-N, torch.tensor([0.]))
+        ampl_h = torch.heaviside(-bl_N+N, torch.tensor([1.]))
+        ampl_N = amplitudes * torch.stack([ampl_h, ampl_p, ampl_p], axis=1)[:,:,0]
+        ampl_N = torch.nn.functional.normalize(ampl_N, p=2, eps = 1e-30)
+        return ampl_N
+    
+    def _gen_samples(self, nx, ny, direction, inputs, hidden_inputs, samples, numsamples, num):
         # pass the hidden unit and sigma into the GRU cell at t=i 
         # and get the output y (will be used for calculating the 
         # probability) and the next hidden state
@@ -143,12 +150,38 @@ class Model(nn.Module):
         ampl = self.lin1(y)
         ampl = torch.softmax(ampl,dim=1) # amplitude, all elements in a row sum to 1
         # samples are obtained by sampling from the amplitudes
+        """
+        N_tot = 15
+        if num >= self.N_x*self.N_y-N_tot:
+            print(num)
+            Nup, Ndn = self.get_particle_no_partially_sampled(samples, numsamples)
+            print(Nup+Ndn)
+            ampl = self.enforce_N_total(N_tot, Nup, Ndn, ampl)
+        """
         sample = torch.multinomial(ampl, 1) 
         # one hot encode the current sigma to pass it into the GRU at
         # the next time step
         sigma = nn.functional.one_hot(sample, self.input_size).double()
-        
         return sample[:,0], sigma, hidden
+    
+    def get_particle_no_partially_sampled(self, samples, numsamples):
+        Nup = torch.zeros(numsamples)
+        Ndn = torch.zeros(numsamples)
+        for sx in samples:
+            for sy in sx:
+                if sy != []:
+                    Nup[sy==2] += 1 
+                    Ndn[sy==1] += 1
+        return Nup.detach(), Ndn.detach()
+    
+    def get_particle_no_fully_sampled(self, samples):
+        Nup = torch.zeros(samples.size())
+        Ndn = torch.zeros(samples.size())
+        Nup[samples==2] = 1 
+        Ndn[samples==1] = 1
+        Nup = Nup.sum(axis=2).sum(axis=1)
+        Ndn = Ndn.sum(axis=2).sum(axis=1)
+        return Nup.detach(), Ndn.detach()
     
     
     def sample(self, num_samples):
@@ -166,31 +199,43 @@ class Model(nn.Module):
                 hidden_inputs[str(nx)+str(ny)] = self.init_hidden(num_samples)
         
         samples     = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
+        num = 0
+        #start = timeit.default_timer()
         for ny in range(self.N_y):
-            if ny % 2 == 0: #go from left to right
+            if ny % 2 == 0: #go from left to right    
                 for nx in range(self.N_x):
                     direction = [-1,-1]
-                    samples[nx][ny], sigma, hidden_inputs[str(nx)+str(ny)] = self._gen_samples(nx, ny, direction, inputs, hidden_inputs, num_samples)
+                    samples[nx][ny], sigma, hidden_inputs[str(nx)+str(ny)] = self._gen_samples(nx, ny, direction, inputs, hidden_inputs, samples, num_samples, num)
                     inputs[str(nx)+str(ny)] = sigma
+                    num += 1
             else: #go from right to left
                 for nx in range(self.N_x-1, -1, -1):
                     direction = [1,-1]
-                    samples[nx][ny], sigma, hidden_inputs[str(nx)+str(ny)] = self._gen_samples(nx, ny, direction, inputs, hidden_inputs, num_samples)
+                    samples[nx][ny], sigma, hidden_inputs[str(nx)+str(ny)] = self._gen_samples(nx, ny, direction, inputs, hidden_inputs, samples, num_samples, num)
                     inputs[str(nx)+str(ny)] = sigma
-                    
+                    num += 1     
         samples = torch.stack([torch.stack(s, axis=1) for s in samples], axis=1).to(self.device)  #.reshape((num_samples, self.N_x, self.N_y))
+        #end = timeit.default_timer()
+        #print(end-start)
         return samples
     
-    def _gen_probs(self, nx, ny, direction, sample, inputs, hidden_inputs):
+    def _gen_probs(self, nx, ny, direction, samples, inputs, hidden_inputs, num):
         # pass the hidden unit and sigma into the GRU cell at t=i 
         # and get the output y (will be used for calculating the 
         # probability) and the next hidden state
+        sample = samples[:,nx,ny]
         full_sigma = [inputs[str(nx+direction[0])+str(ny)],inputs[str(nx)+str(ny+direction[1])]]
         hidden     = [hidden_inputs[str(nx+direction[0])+str(ny)],hidden_inputs[str(nx)+str(ny+direction[1])]]
         y, hidden  = self.forward(full_sigma, hidden)
         # the amplitude is given by a linear layer with a softmax activation
         ampl = self.lin1(y)
         ampl = torch.softmax(ampl,dim=1) # amplitude, all elements in a row sum to 1
+        """
+        N_tot = 15
+        if num >= self.N_x*self.N_y-N_tot:
+            Nup, Ndn = self.get_particle_no_fully_sampled(samples[:,:nx,:ny])
+            ampl = self.enforce_N_total(N_tot, Nup, Ndn, ampl)
+        """
         # the phase is given by a linear layer with a softsign activation
         phase = self.lin2(y)
         phase = self.soft(phase) 
@@ -221,19 +266,25 @@ class Model(nn.Module):
         ampl_probs  = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
         phase_probs = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
         ohs         = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
+        num = 0
+        #start = timeit.default_timer()
         for ny in range(self.N_y):
             if ny % 2 == 0: #go from left to right
                 for nx in range(self.N_x):
                     direction = [-1,-1]
-                    sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden_inputs[str(nx)+str(ny)] = self._gen_probs(nx, ny, direction, samples[:,nx,ny], inputs, hidden_inputs)
+                    sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden_inputs[str(nx)+str(ny)] = self._gen_probs(nx, ny, direction, samples, inputs, hidden_inputs, num)
                     ohs[nx][ny] = sigma
                     inputs[str(nx)+str(ny)] = sigma
+                    num += 1
             else: #go from right to left
                 for nx in range(self.N_x-1, -1, -1):
                     direction = [1,-1]
-                    sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden_inputs[str(nx)+str(ny)] = self._gen_probs(nx, ny, direction, samples[:,nx,ny], inputs, hidden_inputs)
+                    sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden_inputs[str(nx)+str(ny)] = self._gen_probs(nx, ny, direction, samples, inputs, hidden_inputs, num)
                     ohs[nx][ny] = sigma
                     inputs[str(nx)+str(ny)] = sigma
+                    num += 1
+        #end = timeit.default_timer()
+        #print(end-start)
         ampl_probs = torch.cat([torch.stack(a, axis=1) for a in ampl_probs], axis=1) #.reshape((num_samples, self.N_x*self.N_y, 2))
         phase_probs = torch.cat([torch.stack(p, axis=1) for p in phase_probs], axis=1) #.reshape((num_samples, self.N_x*self.N_y, 2))
         ohs = torch.cat([torch.cat(o, axis=1) for o in ohs], axis=1) #.reshape((num_samples, self.N_x*self.N_y, 2))

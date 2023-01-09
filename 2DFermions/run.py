@@ -7,7 +7,7 @@ import os
 import timeit 
 
 from model import Model
-from localenergy import tJ2D_Eloc
+from localenergy import tJ2D_Eloc, tJ2D_MatrixElements
 import observables as o
 
 def save(model, boundaries, folder, device):
@@ -23,29 +23,41 @@ def save(model, boundaries, folder, device):
     np.save(folder+"sxsx.npy", sxsx)
     sysy = np.array(o.get_sysy(samples, log_probs, phases, boundaries, model, device))
     np.save(folder+"sysy.npy", sysy)
+
     
-def cost_fct(samples, model, J, t, boundaries, N, mu, sz_tot, N_tot, symmetry=None):
+def cost_fct(samples, model, Jp, Jz, t, boundaries, lamb, N, mu, sz_tot, N_tot, symmetry):
+    cost = 0
     if symmetry != None:
-        Eloc, log_probs, phases, sym_samples, sym_log_probs, sym_phases = tJ2D_Eloc(J,t,samples, model, boundaries, symmetry)
+        Eloc, log_probs, phases, sym_samples, sym_log_probs, sym_phases = tJ2D_Eloc(Jp, Jz, t,samples, model, boundaries, symmetry)
         sym_log_psi = (0.5*sym_log_probs+1j*sym_phases)
     else:
-        Eloc, log_probs, phases = tJ2D_Eloc(J, t, samples, model, boundaries, symmetry)
-    eloc_sum = (Eloc).mean(axis=0)
-    e_loc_corr = mu*(Eloc - eloc_sum).detach()
+        Eloc, log_probs, phases = tJ2D_Eloc(Jp, Jz, t, samples, model, boundaries, symmetry)
+    #_,eloc, _, _ = tJ2D_MatrixElements(Jp, Jz, t, samples, 1, 1, device)
+    #print(samples[:10])
+    #print(eloc[:10])
     log_psi = (0.5*log_probs+1j*phases)
+    eloc_sum = (Eloc).mean(axis=0)
+    e_loc_corr = mu*(1-lamb)*Eloc
+    e_loc_corr += mu*lamb*(Eloc - eloc_sum)
     if sz_tot != None:
-        e_loc_corr += (o.get_sz_(samples, model, device).detach()-sz_tot*torch.ones((samples.size()[0])))**2 
+        e_loc_corr += (o.get_sz_(samples, model, device)-sz_tot*torch.ones((samples.size()[0])))**2     
     if N_tot != None:
-        e_loc_corr += (N-N_tot*torch.ones((samples.size()[0])))**2
-    cost = 2 * torch.real((torch.conj(log_psi) * e_loc_corr.to(torch.complex128))).mean(axis=0)
+        e_loc_corr += (N/N_tot-torch.ones((samples.size()[0])))**2 
     if symmetry != None:
-        cost += 2 * torch.abs(torch.real((torch.conj(log_psi)-(torch.conj(sym_log_psi))))).mean(axis=0)
+        cost += 4 * ((torch.exp(log_probs)-torch.exp(sym_log_probs)) * (torch.real((torch.conj(log_psi)-(torch.conj(sym_log_psi)))))).mean(axis=0)
+        #e_loc_corr += (torch.exp(log_probs) - torch.exp(sym_log_probs))**2
+    cost += 2 * torch.real((torch.conj(log_psi) * e_loc_corr.detach().to(torch.complex128))).mean(axis=0)
+    #beta = 0.0001*(torch.norm(model.rnn.W1, p=1)+torch.norm(model.rnn.W2, p=1)+torch.norm(model.rnn.W3, p=1))
+    #cost += beta
     return Eloc, cost, log_probs, phases
+
+
 
 
 
 # ---------- initial settings --------------
 # torch.cuda.is_available() checks and returns a Boolean True if a GPU is available, else it'll return False
+
 is_cuda = torch.cuda.is_available()
 
 # If we have a GPU available, we'll set our device to GPU. We'll use this device variable later in our code.
@@ -63,28 +75,31 @@ torch.manual_seed(1234)
 # --------- Define and initialize the model ------------
 
 # Define model parameters
-J          = 1
-t          = 0
-mu         = 1
-density    = 1.0
+Jz         = 1.0
+Jp         = 0.75
+t          = 0.0
+density    = 1-1/16
 Nx         = 4
 Ny         = 4
 bounds     = "open"
-load_model = True
-sz_tot     = 0
+load_model = False
+sz_tot     = None #0.5
 N_tot      = int(Nx*Ny*density)
 
 # Define hyperparameters
 n_samples   = 200
+mu          = 0.1
+lamb        = 1.0
 sym         = None
-n_epochs    = 500
+n_epochs    = 1000
 max_grad    = 1000
 lr          = 0.001
-lr_decay    = 200
+lr_decay    = 1000
 lr_thresh   = 0.0005
-hiddendim   = min(int(Nx*Ny/2),20)
+hiddendim   = 20
 
-fol = str(Nx)+"x"+str(Ny)+"_qubits/J="+str(float(J))+"t="+str(float(t))+"den="+str(density)+"/"
+fol = str(Nx)+"x"+str(Ny)+"_qubits/"+bounds+"/Jp="+str(float(Jp))+"Jz="+str(float(Jz))+"t="+str(float(t))+"den="+"{:.2f}".format(density)+"/"
+print(fol)
 model = Model(input_size=3, system_size_x=Nx,system_size_y=Ny, hidden_dim=hiddendim, n_layers=1, device = device)
 model = model.to(device)
 model = model.double()
@@ -92,32 +107,38 @@ if load_model:
     if os.path.exists(fol+"model_params.pt"):
         model.load_state_dict(torch.load(fol+"model_params.pt"))    
 
+
+
+
 # -------- Optimizer and cost function ------------------
 optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-
     
 # --------- start the training ----------------------
-print("n")
+n = 0
 for epoch in range(1, n_epochs + 1):
     start = timeit.default_timer()
-    optimizer.param_groups[0]['lr'] = max(lr_thresh, lr/(1+epoch/lr_decay))
+    optimizer.param_groups[0]['lr'] = max(lr_thresh, lr/(1+n/lr_decay))
     samples = model.sample(n_samples)
     optimizer.zero_grad() # Clears existing gradients from previous epoch
     N  = o.get_particle_no(samples, model, device)
-    if torch.abs(N.mean()/N_tot-1)>=0.01:
-        mu = 0.1
-    else:
-        mu=1
-    Elocs, cost, log_probs, phases = cost_fct(samples, model, J, t, bounds,N, mu, sz_tot, N_tot, symmetry=sym)
+    if torch.abs(N.mean()/N_tot-1)<=0.0005 and mu <= 0.1:
+        sym = None #"C4"
+        mu = 1
+        lr = lr/10
+        print("Set mu to "+str(mu))
+    Elocs, cost, log_probs, phases = cost_fct(samples, model, Jp, Jz, t, bounds, lamb, N, mu, sz_tot, N_tot, symmetry=sym)
     if max_grad != None:
         if torch.abs(cost) > max_grad:
             cost = cost/torch.abs(cost)*max_grad
     cost.backward() # Does backpropagation and calculates gradients
     optimizer.step() # Updates the weights accordingly
     optimizer.zero_grad()
-    if (epoch >= 1/3*n_epochs) and sym == None:
-        print("Use spatial symmetry from now.")
-        sym = "C4"
+    #if (epoch >= 2/3*n_epochs) and sym == "C4":
+    #    print("Use spatial symmetry from now.")
+    #    sym = None
+    #    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    #    n = 0
+    n += 1
     Eloc = Elocs.mean().detach()
     Eloc_var = (Elocs).var(axis=0) 
     N = N.mean(axis=0)
@@ -130,6 +151,7 @@ for epoch in range(1, n_epochs + 1):
         print("Loss: {:.8f}".format(cost)+", mean(E): {:.8f}".format(Eloc)+", var(E): {:.8f}".format(Eloc_var)+", Sx: {:.4f}".format(sx)+", Sy: {:.4f}".format(sy)+", Sz: {:.4f}".format(sz)+", N/N_tot: {:.4f} %".format(N.numpy()/N_tot))
     if epoch != n_epochs: del cost, samples, log_probs, phases, Eloc
 # ----------- save -----------------------------------
+print(samples[:10])
 save(model, bounds, fol, device)
 np.save(fol+"/Eloc.npy", np.array(Eloc))
 np.save(fol+"/N.npy", np.array(N.numpy()))

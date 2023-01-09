@@ -74,8 +74,8 @@ def get_sysy(samples, log_probs, phases, boundaries, model, device):
                 s1 = s1.to(torch.complex64)
                 s1[:,i,j][s1[:,i,j] == 2] = -1j
                 s1[:,i,j][s1[:,i,j] == 1] = 1j
-                s1[:,(i+d[0])%Nx,(j+d[1])%Ny][s1[:,(i+d[0])%Nx,(j+d[1])%Ny] == 1] = -1j
-                s1[:,(i+d[0])%Nx,(j+d[1])%Ny][s1[:,(i+d[0])%Nx,(j+d[1])%Ny] == 0] = 1j
+                s1[:,(i+d[0])%Nx,(j+d[1])%Ny][s1[:,(i+d[0])%Nx,(j+d[1])%Ny] == 2] = -1j
+                s1[:,(i+d[0])%Nx,(j+d[1])%Ny][s1[:,(i+d[0])%Nx,(j+d[1])%Ny] == 1] = 1j
                 sysy_x[:,i,j] += torch.real(torch.exp(0.5*(log_probs1-log_probs))*torch.exp(1j*(phases1-phases))*s1[:,i,j]*s1[:,(i+d[0])%Nx,(j+d[1])%Ny])
             if j != length_y:
                 d = [0,1]
@@ -84,8 +84,8 @@ def get_sysy(samples, log_probs, phases, boundaries, model, device):
                 s1 = s1.to(torch.complex64)
                 s1[:,i,j][s1[:,i,j] == 2] = -1j
                 s1[:,i,j][s1[:,i,j] == 1] = 1j
-                s1[:,(i+d[0])%Nx,(j+d[1])%Ny][s1[:,(i+d[0])%Nx,(j+d[1])%Ny] == 1] = -1j
-                s1[:,(i+d[0])%Nx,(j+d[1])%Ny][s1[:,(i+d[0])%Nx,(j+d[1])%Ny] == 0] = 1j
+                s1[:,(i+d[0])%Nx,(j+d[1])%Ny][s1[:,(i+d[0])%Nx,(j+d[1])%Ny] == 2] = -1j
+                s1[:,(i+d[0])%Nx,(j+d[1])%Ny][s1[:,(i+d[0])%Nx,(j+d[1])%Ny] == 1] = 1j
                 sysy_y[:,i,j] += torch.real(torch.exp(0.5*(log_probs1-log_probs))*torch.exp(1j*(phases1-phases))*s1[:,i,j]*s1[:,(i+d[0])%Nx,(j+d[1])%Ny])
 
     return [torch.mean(sysy_x, axis=0).detach().numpy()*1/4, torch.mean(sysy_y, axis=0).detach().numpy()*1/4]

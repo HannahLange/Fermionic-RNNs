@@ -1,14 +1,15 @@
 import torch
+import numpy as np
 
-
-def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
+def tJ2D_MatrixElements(Jp, Jz, t, samples, length_x, length_y, device):
     """ 
     Calculate the local energies of 2D t-J model given a set of set of samples.
     Returns: The local energies that correspond to the input samples.
     Inputs:
     - samples: (num_samples, N)
     - t: float
-    - J: float
+    - Jp: float
+    - Jz: float
     - length_x: system length in x dir
     - length_y: system length in y dir
     """
@@ -16,11 +17,15 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
     Nx         = samples.size()[1]
     Ny         = samples.size()[2]
     numsamples = samples.size()[0]
+    if length_x == Nx and length_y == Ny:
+        l = Nx*Ny*2
+    else:
+        l = (Nx*Ny*2-(Nx+Ny))
 
     # ---------- hopping term ----------------
-    matrixelements = torch.zeros((numsamples, (Nx*Ny*2-(Nx+Ny)))).to(device)
-    xprime_t = torch.zeros((Nx*Ny*2-(Nx+Ny),numsamples, Nx, Ny)).to(device)
-    signs = torch.ones(((Nx*Ny*2-(Nx+Ny)),numsamples)).to(device)
+    matrixelements = torch.zeros((numsamples, l)).to(device)
+    xprime_t = torch.zeros((l,numsamples, Nx, Ny)).to(device)
+    signs = torch.zeros((l,numsamples)).to(device)
     num = 0
     samples = samples.detach().clone()
     samples[samples==1] = -1
@@ -34,15 +39,29 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
                     new_samples[:,i,j]          = samples[:,(i+1)%Nx, j]
                     valuesT = values.clone()
                     #If both are occupied 
-                    valuesT[values==4]   = -2  #If both spins are up
-                    valuesT[values==-2]  = -2  #If both spins are down
-                    valuesT[values==1]   = -2 #If they are opposite
+                    valuesT[values==4]   = 0  #If both spins are up
+                    valuesT[values==-2]  = 0  #If both spins are down
+                    valuesT[values==1]   = 0 #If they are opposite
                     #If one is occupied
                     valuesT[values==2]   = -1
                     valuesT[values==-1]  = -1
                     matrixelements[:,num]  += valuesT.reshape((numsamples))*t
                     xprime_t[num,:] = new_samples
-                    signs[num,valuesT==-2] = -1
+                    # Here I have to take care of the sign changes!
+                    # 1. hopping in x direction means that I will have to 
+                    # exchange particles to restore the order
+                    P = torch.zeros((numsamples))
+                    for j2 in range(0,Ny):
+                        if j2 != j:
+                            if j2 > j:
+                                p = samples[:,i,j2].clone()
+                            if j2 < j:
+                                p = samples[:,i+1,j2].clone()       
+                            p[p==-1] = 1
+                            p[p==2] = 1
+                            P += p
+                    P[valuesT==0] = 0
+                    signs[num] = P*np.pi
                     num += 1
                 if i != length_y:
                     values = samples[:,i,j] + samples[:,i,(j+1)%Ny]
@@ -51,16 +70,16 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
                     new_samples[:,i,j]          = samples[:,i, (j+1)%Ny]
                     valuesT = values.clone()
                     #If both are occupied
-                    valuesT[values==4]   = -2  #If both spins are up
-                    valuesT[values==-2]  = -2  #If both spins are down
-                    valuesT[values==1]   = -2 #If they are opposite  
+                    valuesT[values==4]   = 0  #If both spins are up
+                    valuesT[values==-2]  = 0  #If both spins are down
+                    valuesT[values==1]   = 0 #If they are opposite  
                     #If one is occupied
                     valuesT[values==2]   = -1
                     valuesT[values==-1]  = -1
                     matrixelements[:,num] +=valuesT.reshape((numsamples))*t
                     xprime_t[num,:] = new_samples
-                    signs[num,valuesT==-2] = -1
                     num += 1
+
     # ---------- S_i* S_j term ---------------
     #diagonal elements
     diag_matrixelements = torch.zeros((numsamples)).to(device) 
@@ -76,7 +95,7 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
                 #If one is occupied
                 valuesT[values==2]   = 0
                 valuesT[values==-1]  = 0
-                diag_matrixelements    += valuesT.reshape((numsamples))*J*0.25
+                diag_matrixelements    += valuesT.reshape((numsamples))*Jz*0.25
             if j != length_y:
                 values = samples[:,i,j] + samples[:,i,(j+1)%Ny]
                 valuesT = values.clone()
@@ -86,13 +105,14 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
                 #If one is occupied
                 valuesT[values==2]   = 0
                 valuesT[values==-1]  = 0
-                diag_matrixelements    += valuesT.reshape((numsamples))*J*0.25
+                diag_matrixelements    += valuesT.reshape((numsamples))*Jz*0.25
 
     
     #off-diagonal elements from the S+S- terms
-    offd_matrixelements = torch.zeros((numsamples, (Nx*Ny*2-(Nx+Ny)))).to(device)
-    xprime = torch.zeros((Nx*Ny*2-(Nx+Ny),numsamples, Nx, Ny)).to(device)
+    offd_matrixelements = torch.zeros((numsamples, l)).to(device)
+    xprime = torch.zeros((l, numsamples, Nx, Ny)).to(device)
     num = 0
+    
     for i in range(Nx): 
         for j in range(Ny):
             if i != length_x:
@@ -107,7 +127,7 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
                 #If one is occupied
                 valuesT[values==2]   = 0
                 valuesT[values==-1]  = 0
-                offd_matrixelements[:,num] = valuesT.reshape((numsamples))*J*0.5
+                offd_matrixelements[:,num] = valuesT.reshape((numsamples))*Jp*0.5
                 xprime[num,:]              = new_samples
                 num +=1
             if j != length_y:
@@ -122,12 +142,12 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
                 #If one is occupied
                 valuesT[values==2]   = 0
                 valuesT[values==-1]  = 0
-                offd_matrixelements[:,num] = valuesT.reshape((numsamples))*J*0.5
+                offd_matrixelements[:,num] = valuesT.reshape((numsamples))*Jp*0.5
                 xprime[num,:]              = new_samples
                 num +=1
-
-    # ---------- n_i*n_j  ----------------
     
+    # ---------- n_i*n_j  ----------------
+    """
     for i in range(Nx):
         for j in range(Ny):
             if i != length_x:
@@ -139,7 +159,7 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
                 #If one is occupied
                 valuesT[values==2]   = 0
                 valuesT[values==-1]  = 0
-                diag_matrixelements  -= valuesT.reshape((numsamples))*J/4
+                diag_matrixelements  -= valuesT.reshape((numsamples))*Jz/4
             if j != length_y:
                 values = samples[:,i,j] + samples[:,i,(j+1)%Ny]
                 valuesT = values.clone()
@@ -149,8 +169,8 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
                 #If one is occupied
                 valuesT[values==2]   = 0
                 valuesT[values==-1]  = 0
-                diag_matrixelements  -= valuesT.reshape((numsamples))*J/4
-    
+                diag_matrixelements  -= valuesT.reshape((numsamples))*Jz/4
+    """
     if t != 0:
         offd_matrixelements = torch.concat([offd_matrixelements, matrixelements], axis=1)
         xprime              = torch.concat([xprime, xprime_t], axis=0)
@@ -158,13 +178,14 @@ def tJ2D_MatrixElements(J, t, samples, length_x, length_y, device):
     return diag_matrixelements, offd_matrixelements, xprime, signs
 
 
-def tJ2D_Eloc(J, t, samples, RNN, boundaries, symmetry):
+def tJ2D_Eloc(Jp, Jz, t, samples, RNN, boundaries, symmetry):
     """ 
     Calculate the local energies of 2D t-J model given a set of set of samples.
     Returns: The local energies that correspond to the input samples.
     Inputs:
     - sample: (num_samples, N)
-    - J: float
+    - Jp: float
+    - Jz: float
     - t: float
     - RNN: RNN model
     - boundaries: str, open or periodic
@@ -184,7 +205,7 @@ def tJ2D_Eloc(J, t, samples, RNN, boundaries, symmetry):
         raise "Boundary "+boundaries+" not implemented"
     
     #matrix elements
-    diag_me, offd_me, new_samples, signs = tJ2D_MatrixElements(J, t, samples, length_x, length_y, device)
+    diag_me, offd_me, new_samples, signs = tJ2D_MatrixElements(Jp, Jz, t, samples, length_x, length_y, device)
     offd_me = offd_me.to(torch.complex64)
     # diagonal elements
     Eloc = diag_me.to(torch.complex64)
@@ -205,11 +226,12 @@ def tJ2D_Eloc(J, t, samples, RNN, boundaries, symmetry):
     log_probs_reshaped = torch.reshape(log_probs, (queue_samples.size()[0],numsamples)).to(torch.complex64)
     phases_reshaped = torch.reshape(phases, (queue_samples.size()[0],numsamples))
     # add the signs due to fermonic exchange
-    if t!= 0: phases_reshaped[int(length/2+1):length+1,:] = signs * phases_reshaped[int(length/2+1):length+1,:]
+    if t!= 0: phases_reshaped[int(length/2+1):length+1,:] = signs + phases_reshaped[int(length/2+1):length+1,:]
     for i in range(1,(length+1)):
         tot_log_probs = 0.5*(log_probs_reshaped[i,:]-log_probs_reshaped[0,:]).to(torch.complex64)
         tot_log_probs += 1j*(phases_reshaped[i,:]-phases_reshaped[0,:])
         Eloc += offd_me[:,i-1]*(torch.exp(tot_log_probs))
+    
     if symmetry != None:
         return Eloc, log_probs_reshaped[0], phases_reshaped[0], symmetric_samples, log_probs_reshaped[length+1], phases_reshaped[length+1]
     else:
@@ -223,6 +245,5 @@ def get_symmetric_samples(samples, symmetry, device):
         symmetric_samples[l:2*l] = torch.rot90(samples[l:2*l], 2, [1,2])
         symmetric_samples[2*l:]  = torch.rot90(samples[2*l:],  3, [1,2])
     if symmetry == "C2":
-        symmetric_samples = torch.zeros((samples.size()[0],samples.size()[1], samples.size()[2]), dtype = torch.int32).to(device)
         symmetric_samples = torch.rot90(samples, 2, [1,2])
     return symmetric_samples
