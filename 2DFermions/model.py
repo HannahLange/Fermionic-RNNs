@@ -50,12 +50,16 @@ class TensorizedGRU(nn.Module):
         if len(inputs[1].size()) == 3:
             inputs[1] = inputs[1][:,0,:]
 
+        # calculate sigma * T * h term
         inputstate_mul = torch.einsum('ij,ik->ijk', torch.concat((states[0], states[1]), 1),torch.concat((inputs[0], inputs[1]),1))
-        # prepare input linear combination
+        # calculate h_tilde in Eq. A2
         state_mul1 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W1) # [batch_sz, num_units]
+        state_tilda = self.tanh(state_mul1 + self.b1)
+        # calculate u_n in Eq. A2
         state_mul2 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W2) # [batch_sz, num_units]
         u = self.sigmoid(state_mul2 + self.b2)
         state_tilda = self.tanh(state_mul1 + self.b1) 
+        # calculate new state
         new_state = u*state_tilda 
         new_state += (1.-u)*torch.einsum('ij,jk->ik', torch.concat((states[0], states[1]), 1), self.W3)
         output = new_state

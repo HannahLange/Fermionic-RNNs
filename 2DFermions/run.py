@@ -25,17 +25,15 @@ def save(model, boundaries, folder, device):
     np.save(folder+"sysy.npy", sysy)
 
     
-def cost_fct(samples, model, Jp, Jz, t, boundaries, lamb, N, mu, sz_tot, N_tot, symmetry):
+def cost_fct(samples, model, Jp, Jz, t, boundaries, lamb, N, mu, sz_tot, N_tot, beta, symmetry):
     cost = 0
     if symmetry != None:
         Eloc, log_probs, phases, sym_samples, sym_log_probs, sym_phases = tJ2D_Eloc(Jp, Jz, t,samples, model, boundaries, symmetry)
         sym_log_psi = (0.5*sym_log_probs+1j*sym_phases)
     else:
         Eloc, log_probs, phases = tJ2D_Eloc(Jp, Jz, t, samples, model, boundaries, symmetry)
-    #_,eloc, _, _ = tJ2D_MatrixElements(Jp, Jz, t, samples, 1, 1, device)
-    #print(samples[:10])
-    #print(eloc[:10])
     log_psi = (0.5*log_probs+1j*phases)
+
     eloc_sum = (Eloc).mean(axis=0)
     e_loc_corr = mu*(1-lamb)*Eloc
     e_loc_corr += mu*lamb*(Eloc - eloc_sum)
@@ -47,8 +45,10 @@ def cost_fct(samples, model, Jp, Jz, t, boundaries, lamb, N, mu, sz_tot, N_tot, 
         cost += 4 * ((torch.exp(log_probs)-torch.exp(sym_log_probs)) * (torch.real((torch.conj(log_psi)-(torch.conj(sym_log_psi)))))).mean(axis=0)
         #e_loc_corr += (torch.exp(log_probs) - torch.exp(sym_log_probs))**2
     cost += 2 * torch.real((torch.conj(log_psi) * e_loc_corr.detach().to(torch.complex128))).mean(axis=0)
-    #beta = 0.0001*(torch.norm(model.rnn.W1, p=1)+torch.norm(model.rnn.W2, p=1)+torch.norm(model.rnn.W3, p=1))
-    #cost += beta
+    print(cost)
+    beta_term = beta*(torch.norm(model.rnn.W1, p=1)+torch.norm(model.rnn.W2, p=1)+torch.norm(model.rnn.W3, p=1))
+    cost += beta_term
+    print(beta_term)
     return Eloc, cost, log_probs, phases
 
 
@@ -82,21 +82,22 @@ density    = 1-1/16
 Nx         = 4
 Ny         = 4
 bounds     = "open"
-load_model = False
+load_model = True
 sz_tot     = None #0.5
 N_tot      = int(Nx*Ny*density)
 
 # Define hyperparameters
 n_samples   = 200
-mu          = 0.1
+mu          = 0.01
 lamb        = 1.0
+beta        = 0.0
 sym         = None
 n_epochs    = 1000
 max_grad    = 1000
-lr          = 0.001
+lr          = 0.1
 lr_decay    = 1000
 lr_thresh   = 0.0005
-hiddendim   = 20
+hiddendim   = int(N_tot/2)
 
 fol = str(Nx)+"x"+str(Ny)+"_qubits/"+bounds+"/Jp="+str(float(Jp))+"Jz="+str(float(Jz))+"t="+str(float(t))+"den="+"{:.2f}".format(density)+"/"
 print(fol)
@@ -111,8 +112,9 @@ if load_model:
 
 
 # -------- Optimizer and cost function ------------------
-optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    
+#optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.1)
+
 # --------- start the training ----------------------
 n = 0
 for epoch in range(1, n_epochs + 1):
@@ -121,12 +123,19 @@ for epoch in range(1, n_epochs + 1):
     samples = model.sample(n_samples)
     optimizer.zero_grad() # Clears existing gradients from previous epoch
     N  = o.get_particle_no(samples, model, device)
-    if torch.abs(N.mean()/N_tot-1)<=0.0005 and mu <= 0.1:
-        sym = None #"C4"
-        mu = 1
-        lr = lr/10
-        print("Set mu to "+str(mu))
-    Elocs, cost, log_probs, phases = cost_fct(samples, model, Jp, Jz, t, bounds, lamb, N, mu, sz_tot, N_tot, symmetry=sym)
+    if torch.abs(N.mean()/N_tot-1)<=0.0005:
+        if beta == 0:
+            beta = 0.01
+            print("Set beta to "+str(beta))
+        if beta != 0:
+            n += 1
+        if beta != 0 and mu < 1 and n >=20:
+            #sym = None #"C4"
+            mu = 1
+            #lr = lr/10
+            beta = 0.01
+            print("Set mu to "+str(mu))
+    Elocs, cost, log_probs, phases = cost_fct(samples, model, Jp, Jz, t, bounds, lamb, N, mu, sz_tot, N_tot, beta, symmetry=sym)
     if max_grad != None:
         if torch.abs(cost) > max_grad:
             cost = cost/torch.abs(cost)*max_grad
@@ -138,7 +147,6 @@ for epoch in range(1, n_epochs + 1):
     #    sym = None
     #    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     #    n = 0
-    n += 1
     Eloc = Elocs.mean().detach()
     Eloc_var = (Elocs).var(axis=0) 
     N = N.mean(axis=0)
