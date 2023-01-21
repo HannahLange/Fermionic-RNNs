@@ -4,17 +4,17 @@ import numpy as np
 import timeit
 
 
-class TensorizedGRU(nn.Module):
-    """ Custom GRU layer for 2D input """
-    def __init__(self, input_size, hidden_size, device):
+class TensorizedRNN(nn.Module):
+    """ Custom RNN / GRU layer for 2D input """
+    def __init__(self, input_size, hidden_size, device, celltype="GRU"):
         super().__init__()
         
         self.input_size  = input_size
         self.hidden_size = hidden_size
-        self.sigmoid = torch.nn.Sigmoid()
-        self.tanh    = torch.nn.Tanh()
-        self.device  = device
-        
+        self.sigmoid  = torch.nn.Sigmoid()
+        self.tanh     = torch.nn.Tanh()
+        self.device   = device
+        self.celltype = celltype        
           
         # define all weights
         w1      = torch.empty(self.hidden_size, 2*self.hidden_size, 2*self.input_size)
@@ -22,27 +22,28 @@ class TensorizedGRU(nn.Module):
         b1      = torch.empty(self.hidden_size)
         self.b1 = nn.Parameter(b1).to(self.device)
         
-        w2      = torch.empty(self.hidden_size, 2*self.hidden_size, 2*self.input_size)
-        self.W2 = nn.Parameter(w2).to(self.device) 
-        b2      = torch.empty(self.hidden_size)
-        self.b2 = nn.Parameter(b2).to(self.device)
+        if self.celltype == "GRU":
+            w2      = torch.empty(self.hidden_size, 2*self.hidden_size, 2*self.input_size)
+            self.W2 = nn.Parameter(w2).to(self.device) 
+            b2      = torch.empty(self.hidden_size)
+            self.b2 = nn.Parameter(b2).to(self.device)
         
-        w3      = torch.empty(2*self.hidden_size, self.hidden_size)
-        self.W3 = nn.Parameter(w3).to(self.device) 
+            wmerge      = torch.empty(2*self.hidden_size, self.hidden_size)
+            self.Wmerge = nn.Parameter(wmerge).to(self.device) 
 
-        self.reset_parameters()
+            self.reset_parameters()
         
     def reset_parameters(self):
         nn.init.xavier_uniform_(self.W1, 1)
-        nn.init.xavier_uniform_(self.W2, 1)
-        nn.init.xavier_uniform_(self.W3, 1)
+        if self.celltype == "GRU":
+            nn.init.xavier_uniform_(self.W2, 1)
+            nn.init.xavier_uniform_(self.Wmerge, 1)
+            fan_in, fan_out = nn.init._calculate_fan_in_and_fan_out(self.W2)
+            lim = np.sqrt(3.0 / (0.5*(fan_in+fan_out)))
+            nn.init.uniform_(self.b2, -lim, lim)
         fan_in, fan_out = nn.init._calculate_fan_in_and_fan_out(self.W1)
         lim = np.sqrt(3.0 / (0.5*(fan_in+fan_out)))
         nn.init.uniform_(self.b1, -lim, lim)
-        fan_in, fan_out = nn.init._calculate_fan_in_and_fan_out(self.W2) 
-        lim = np.sqrt(3.0 / (0.5*(fan_in+fan_out)))
-        nn.init.uniform_(self.b2, -lim, lim)
-   
 
     def forward(self, inputs, states):
         if len(inputs[0].size()) == 3:
@@ -52,16 +53,22 @@ class TensorizedGRU(nn.Module):
 
         # calculate sigma * T * h term
         inputstate_mul = torch.einsum('ij,ik->ijk', torch.concat((states[0], states[1]), 1),torch.concat((inputs[0], inputs[1]),1))
-        # calculate h_tilde in Eq. A2
-        state_mul1 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W1) # [batch_sz, num_units]
-        state_tilda = self.tanh(state_mul1 + self.b1)
-        # calculate u_n in Eq. A2
-        state_mul2 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W2) # [batch_sz, num_units]
-        u = self.sigmoid(state_mul2 + self.b2)
-        state_tilda = self.tanh(state_mul1 + self.b1) 
-        # calculate new state
-        new_state = u*state_tilda 
-        new_state += (1.-u)*torch.einsum('ij,jk->ik', torch.concat((states[0], states[1]), 1), self.W3)
+        
+        if self.celltype == "RNN":
+            state_mul1 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W1) # [batch_sz, num_units]
+            new_state = self.tanh(state_mul1 + self.b1)
+        if self.celltype == "GRU":
+            # calculate h_tilde in Eq. A1
+            state_mul1 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W1) # [batch_sz, num_units]
+            state_tilda = self.tanh(state_mul1 + self.b1)
+            # calculate u_n in Eq. A1
+            state_mul2 = torch.einsum('ijk,ljk->il', inputstate_mul, self.W2) # [batch_sz, num_units]
+            u = self.sigmoid(state_mul2 + self.b2)
+            state_tilda = self.tanh(state_mul1 + self.b1) 
+            # calculate new state
+            new_state = u*state_tilda 
+            new_state += (1.-u)*torch.einsum('ij,jk->ik', torch.concat((states[0], states[1]), 1), self.Wmerge)
+      
         output = new_state
         return output, new_state
 
@@ -89,7 +96,7 @@ class Model(nn.Module):
         self.device      = device 
         self.system_size = system_size_x*system_size_y
         #Defining the layers
-        self.rnn  = TensorizedGRU(self.input_size, hidden_dim, self.device)   
+        self.rnn  = TensorizedRNN(self.input_size, hidden_dim, self.device)   
         self.lin1 = nn.Linear(hidden_dim, self.output_size)
         self.lin2 = nn.Linear(hidden_dim, self.output_size)
         #self.s    = torch.softmax(dim=0)

@@ -51,7 +51,7 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples, length_x, length_y, device):
                     # 1. hopping in x direction means that I will have to 
                     # exchange particles to restore the order
                     P = torch.zeros((numsamples))
-                    for j2 in range(0,Ny):
+                    for j2 in range(0,length_y):
                         if j2 != j:
                             if j2 > j:
                                 p = samples[:,i,j2].clone()

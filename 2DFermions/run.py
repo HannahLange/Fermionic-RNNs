@@ -35,20 +35,20 @@ def cost_fct(samples, model, Jp, Jz, t, boundaries, lamb, N, mu, sz_tot, N_tot, 
     log_psi = (0.5*log_probs+1j*phases)
 
     eloc_sum = (Eloc).mean(axis=0)
-    e_loc_corr = mu*(1-lamb)*Eloc
-    e_loc_corr += mu*lamb*(Eloc - eloc_sum)
+    e_loc_corr = (1-lamb)*Eloc
+    e_loc_corr += lamb*(Eloc - eloc_sum)
     if sz_tot != None:
-        e_loc_corr += (o.get_sz_(samples, model, device)-sz_tot*torch.ones((samples.size()[0])))**2     
+        e_loc_corr += (np.abs(o.get_sz_(samples, model, device))-sz_tot*torch.ones((samples.size()[0])))**2     
     if N_tot != None:
-        e_loc_corr += (N/N_tot-torch.ones((samples.size()[0])))**2 
+        e_loc_corr += mu * (N/N_tot-torch.ones((samples.size()[0])))**2
+    #print(2 * torch.real((torch.conj(log_psi) *(mu *(N/N_tot-torch.ones((samples.size()[0])))**2).detach().to(torch.complex128))).mean(axis=0)) 
     if symmetry != None:
-        cost += 4 * ((torch.exp(log_probs)-torch.exp(sym_log_probs)) * (torch.real((torch.conj(log_psi)-(torch.conj(sym_log_psi)))))).mean(axis=0)
+        cost += mu/10 * 4 * ((torch.exp(log_probs)-torch.exp(sym_log_probs)) * (torch.real((torch.conj(log_psi)-(torch.conj(sym_log_psi)))))).mean(axis=0)
         #e_loc_corr += (torch.exp(log_probs) - torch.exp(sym_log_probs))**2
     cost += 2 * torch.real((torch.conj(log_psi) * e_loc_corr.detach().to(torch.complex128))).mean(axis=0)
-    print(cost)
-    beta_term = beta*(torch.norm(model.rnn.W1, p=1)+torch.norm(model.rnn.W2, p=1)+torch.norm(model.rnn.W3, p=1))
-    cost += beta_term
-    print(beta_term)
+    #print(cost)
+    #beta_term = beta*(torch.norm(model.rnn.W1, p=1)+torch.norm(model.rnn.W2, p=1)+torch.norm(model.rnn.Wmerge, p=1))
+    #cost += beta_term
     return Eloc, cost, log_probs, phases
 
 
@@ -76,28 +76,28 @@ torch.manual_seed(1234)
 
 # Define model parameters
 Jz         = 1.0
-Jp         = 0.75
-t          = 0.0
+Jp         = 0.0
+t          = 1.0
 density    = 1-1/16
 Nx         = 4
 Ny         = 4
 bounds     = "open"
 load_model = True
-sz_tot     = None #0.5
+sz_tot     = None
 N_tot      = int(Nx*Ny*density)
 
 # Define hyperparameters
-n_samples   = 200
-mu          = 0.01
+n_samples   = 1000
+mu          = 0.0
 lamb        = 1.0
 beta        = 0.0
-sym         = None
+sym         = "C4"
 n_epochs    = 1000
 max_grad    = 1000
-lr          = 0.1
+lr          = 0.005
 lr_decay    = 1000
-lr_thresh   = 0.0005
-hiddendim   = int(N_tot/2)
+lr_thresh   = 0.0001
+hiddendim   = 16
 
 fol = str(Nx)+"x"+str(Ny)+"_qubits/"+bounds+"/Jp="+str(float(Jp))+"Jz="+str(float(Jz))+"t="+str(float(t))+"den="+"{:.2f}".format(density)+"/"
 print(fol)
@@ -112,29 +112,21 @@ if load_model:
 
 
 # -------- Optimizer and cost function ------------------
-#optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.1)
+optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+#optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.1)
 
 # --------- start the training ----------------------
-n = 0
+
 for epoch in range(1, n_epochs + 1):
     start = timeit.default_timer()
-    optimizer.param_groups[0]['lr'] = max(lr_thresh, lr/(1+n/lr_decay))
+    #optimizer.param_groups[0]['lr'] = max(lr_thresh, lr/(1+n/lr_decay))
     samples = model.sample(n_samples)
     optimizer.zero_grad() # Clears existing gradients from previous epoch
     N  = o.get_particle_no(samples, model, device)
-    if torch.abs(N.mean()/N_tot-1)<=0.0005:
-        if beta == 0:
-            beta = 0.01
-            print("Set beta to "+str(beta))
-        if beta != 0:
-            n += 1
-        if beta != 0 and mu < 1 and n >=20:
-            #sym = None #"C4"
-            mu = 1
-            #lr = lr/10
-            beta = 0.01
-            print("Set mu to "+str(mu))
+    if epoch >= n_epochs/3:
+        mu = np.log10(1+9*(epoch-n_epochs/3)/(n_epochs/3))*1000
+    else:
+        mu = np.log10(1+9*epoch/(n_epochs/3))*100    
     Elocs, cost, log_probs, phases = cost_fct(samples, model, Jp, Jz, t, bounds, lamb, N, mu, sz_tot, N_tot, beta, symmetry=sym)
     if max_grad != None:
         if torch.abs(cost) > max_grad:
@@ -142,15 +134,11 @@ for epoch in range(1, n_epochs + 1):
     cost.backward() # Does backpropagation and calculates gradients
     optimizer.step() # Updates the weights accordingly
     optimizer.zero_grad()
-    #if (epoch >= 2/3*n_epochs) and sym == "C4":
-    #    print("Use spatial symmetry from now.")
-    #    sym = None
-    #    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    #    n = 0
     Eloc = Elocs.mean().detach()
     Eloc_var = (Elocs).var(axis=0) 
     N = N.mean(axis=0)
     end = timeit.default_timer()
+    
     if epoch%10 == 0 or epoch == 1:
         sx = o.get_sx(samples, log_probs, phases, model, device)
         sy = o.get_sy(samples, log_probs, phases, model, device)
