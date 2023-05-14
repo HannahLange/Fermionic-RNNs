@@ -54,10 +54,9 @@ def initialize_torch():
     else:
         device = torch.device("cpu")
         print("GPU not available, CPU used")
-
+    torch.manual_seed(1234)
     random.seed(1234)
     np.random.seed(0)
-    torch.manual_seed(1234)
     return device
 
 

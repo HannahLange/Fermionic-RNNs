@@ -3,7 +3,7 @@ import os
 Nx = 4
 Ny = 4
 
-Jp = 0
+Jp = 1
 Jz = 1
 t  = 3
 bounds_x = 1
@@ -15,7 +15,7 @@ else:
 load_data = 0
 antisym = 0
 
-for density in [1-2/(Nx*Ny)]: #1-2/(Nx*Ny), 0.75, 0.50]: #, 1-2/(Nx*Ny)]: #, 0.50, 1-1/(Nx*Ny),1-2/(Nx*Ny), 1-3/(Nx*Ny)]:
+for density in [1,1-4/(Nx*Ny),0.5]: #1-2/(Nx*Ny), 0.75, 0.50]: #, 1-2/(Nx*Ny)]: #, 0.50, 1-1/(Nx*Ny),1-2/(Nx*Ny), 1-3/(Nx*Ny)]:
     fol = str(Nx)+"x"+str(Ny)+"_qubits/"+bounds+"/Jp="+str(float(Jp))+"Jz="+str(float(Jz))+"t="+str(float(t))+"den="+"{:.2f}".format(density)+"/"
     print(fol)
     if not os.path.exists(fol):

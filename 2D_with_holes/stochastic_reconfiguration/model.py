@@ -183,12 +183,12 @@ class Model(nn.Module):
             out = out.contiguous().view(-1, self.hidden_dim)
             hidden = [hidden]
         if self.rnn_type=="Dilated":
-            o, h1 = self.rnn[0][i*self.N_y+j](x[:2], hidden[:2])
+            o, h1   = self.rnn[0][i*self.N_y+j](x[:2], hidden[:2])
             out, h2 = self.rnn[1][i*self.N_y+j](o, hidden[2:4])
             out = out.contiguous().view(-1, self.hidden_dim)
             hidden = [h1, h2]
         return out, hidden
-    
+
     def init_hidden(self, batch_size):
         """
         Generates the hidden state for a given batch size.
@@ -209,6 +209,7 @@ class Model(nn.Module):
                 p += param.numel()
         print("Total number of parameters in the network: "+str(p))
         return p
+
 
     def enforce_N_total(self, num_up, num_dn, sampled_sites, amplitudes):
         """ Enforces the particle number and magnetization sectors as described in Hibat-Allah 2020 for the magnetization."""
@@ -300,7 +301,7 @@ class Model(nn.Module):
                     num += 1     
         samples = torch.stack([torch.stack(s, axis=1) for s in samples], axis=1).to(self.device)  
         return samples
-    
+
     def _gen_probs(self, nx, ny, direction, samples, inputs, hidden_inputs, num, num_up, num_dn, num_sites):
         # pass the hidden unit and sigma into the GRU cell at t=i 
         # and get the output y (will be used for calculating the 
@@ -394,3 +395,24 @@ class Model(nn.Module):
         phase = torch.sum((torch.sum(torch.torch.multiply(phase_probs,ohs), axis =2)), axis=1)
         return log_probs_ampl, phase
 
+    def log_probabilities_from_weights(self, samples, weights):
+        l1 = self.rnn.W1.size(0)*self.rnn.W1.size(1)*self.rnn.W1.size(2)
+        self.rnn.W1      = nn.Parameter(weights[0:l1].reshape(self.rnn.W1.size(0),self.rnn.W1.size(1),self.rnn.W1.size(2)))
+        l2 = l1 + self.rnn.b1.size(0)
+        self.rnn.b1      = nn.Parameter(weights[l1:l2].reshape(self.rnn.b1.size(0)))
+        l3 = l2 + self.rnn.W2.size(0)*self.rnn.W2.size(1)*self.rnn.W2.size(2)
+        self.rnn.W2      = nn.Parameter(weights[l2:l3].reshape(self.rnn.W2.size(0),self.rnn.W2.size(1),self.rnn.W1.size(2)))
+        l4 = l3 + self.rnn.b2.size(0)
+        self.rnn.b2      = nn.Parameter(weights[l3:l4].reshape(self.rnn.b2.size(0)))
+        l5 = l4 + self.rnn.Wmerge.size(0)*self.rnn.Wmerge.size(1)
+        self.rnn.Wmerge  = nn.Parameter(weights[l4:l5].reshape(self.rnn.Wmerge.size(0),self.rnn.Wmerge.size(1)))
+        l6 = l5 + self.lin1.weight.size(0)*self.lin1.weight.size(1)
+        self.lin1.weight = nn.Parameter(weights[l5:l6].reshape(self.lin1.weight.size(0), self.lin1.weight.size(1)))
+        l7 = l6 + self.lin1.bias.size(0)
+        self.lin1.bias = nn.Parameter(weights[l6:l7].reshape(self.lin1.bias.size(0)))
+        l8 = l7 + self.lin2.weight.size(0)*self.lin2.weight.size(1)
+        self.lin2.weight = nn.Parameter(weights[l7:l8].reshape(self.lin2.weight.size(0),self.lin2.weight.size(1)))
+        l9 = l8 + self.lin2.bias.size(0)
+        self.lin2.bias = nn.Parameter(weights[l8:l9].reshape(self.lin2.bias.size(0)))
+        l = list(filter(lambda p: p.requires_grad, self.parameters()))
+        return self.log_probabilities(samples)
