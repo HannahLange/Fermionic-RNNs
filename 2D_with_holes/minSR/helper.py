@@ -94,17 +94,14 @@ def parse_input(parser, H):
             sym     = "C4"
         else:
             sym = "C2"
-        su2_sym = False
         print("Enforce symmetries: C4 and Sz_tot = "+str(sz_tot))
     else:
         sym     = None
-        su2_sym = False
-        sz_tot  = None
     b_dict = {1: "open", 0: "periodic"}
     if args.bounds == 0:
         args.boundx = 0
         args.boundy = 0
-    return {"U": U, "t": t, "Jp": Jp, "Jz": Jz}, density, Nx, Ny, b_dict[args.boundsx], b_dict[args.boundsy], {1: True, 0: False}[args.load_model], sz_tot, sym, su2_sym, antisym
+    return {"U": U, "t": t, "Jp": Jp, "Jz": Jz}, density, Nx, Ny, b_dict[args.boundsx], b_dict[args.boundsy], {1: True, 0: False}[args.load_model], sz_tot, sym, antisym
 
 
 def save_params(params, folder, fol_ext):
