@@ -9,7 +9,7 @@ torch.set_default_tensor_type(torch.FloatTensor)
 torch.manual_seed(1234)
 
 class TensorizedRNN(nn.Module):
-    def __init__(self, input_size, hidden_size, device, celltype="GRU"):
+    def __init__(self, input_size, hidden_size, device, dtype=torch.float64, celltype="GRU"):
         super().__init__()
         """ 
         Custom RNN / GRU layer for 2D input 
@@ -18,6 +18,7 @@ class TensorizedRNN(nn.Module):
             device: CPU or GPU
             celltype: plain vanilla "RNN" or gated unit "GRU"
         """
+
         self.input_size  = input_size
         self.hidden_size = hidden_size
         self.sigmoid  = torch.nn.Sigmoid()
@@ -29,7 +30,7 @@ class TensorizedRNN(nn.Module):
 
         # define all layers / weights
         input_dim = 2*self.input_size
-        factory_kwargs = {'device': device, 'dtype': torch.float32}
+        factory_kwargs = {'device': device, 'dtype': dtype}
         if self.celltype == "GRU" or self.celltype == "RNN":
             w1      = torch.empty((input_dim, 2*self.hidden_size, self.hidden_size),**factory_kwargs)
             self.W1 = nn.Parameter(w1)  # nn.Parameter is a Tensor that's a module parameter.
@@ -101,7 +102,7 @@ class TensorizedRNN(nn.Module):
 
 
 class Model(nn.Module):
-    def __init__(self, input_size, system_size_x, system_size_y, N_target, sz_total, hidden_dim, weight_sharing, device):
+    def __init__(self, input_size, system_size_x, system_size_y, N_target, sz_total, hidden_dim, weight_sharing, device, dtype=torch.float64):
         super(Model, self).__init__()
         """
         Creates RNN consisting of GRU cells.
@@ -127,12 +128,13 @@ class Model(nn.Module):
         self.rnn_type    = "Non-Dilated" # else: Dilated 
         self.system_size = system_size_x*system_size_y
         self.weight_sharing = weight_sharing
+        self.dtype       = dtype
         #Defining the layers
         if self.weight_sharing == True:
             print("Use RNN cell with weight sharing.")
             self.rnn  = TensorizedRNN(self.input_size, hidden_dim, self.device)   
-            self.lin1 = nn.Linear(hidden_dim, self.output_size, device=self.device, dtype=torch.float32)
-            self.lin2 = nn.Linear(hidden_dim, self.output_size, device=self.device, dtype=torch.float32)
+            self.lin1 = nn.Linear(hidden_dim, self.output_size, device=self.device, dtype=self.dtype)
+            self.lin2 = nn.Linear(hidden_dim, self.output_size, device=self.device, dtype=self.dtype)
         elif self.weight_sharing == False or self.rnn_type == "Dilated":
             self.rnn = []
             self.lin1 = []
@@ -148,8 +150,8 @@ class Model(nn.Module):
                 for i in range(self.N_x):
                     for j in range(self.N_y):
                         if nl == 0:
-                            lin1.append(nn.Linear(hidden_dim, self.output_size, device=self.device, dtype=torch.float32))
-                            lin2.append(nn.Linear(hidden_dim, self.output_size, device=self.device, dtype=torch.float32))
+                            lin1.append(nn.Linear(hidden_dim, self.output_size, device=self.device, dtype=self.dtype))
+                            lin2.append(nn.Linear(hidden_dim, self.output_size, device=self.device, dtype=self.dtype))
                             rnn.append(TensorizedRNN(self.input_size, hidden_dim, self.device, layer=1))
                         else:
                             rnn.append(TensorizedRNN(hidden_dim, hidden_dim, self.device, layer=2))
@@ -201,7 +203,7 @@ class Model(nn.Module):
         """
         # This method generates the first hidden state of zeros for the forward pass and passes it to the device.
         # A vector of zeros would be  equivalent to a product state.
-        hidden = torch.zeros((batch_size, self.hidden_dim), dtype=torch.float32).to(self.device)
+        hidden = torch.zeros((batch_size, self.hidden_dim), dtype=self.dtype, device=self.device)
         return hidden
     
     def get_num_parameters(self):
@@ -224,9 +226,9 @@ class Model(nn.Module):
             bl_up = ((self.N_target+self.sz_tot*2)//2)*torch.ones((amplitudes.size()[0],1)).to(self.device)
             bl_dn = ((self.N_target-self.sz_tot*2)//2)*torch.ones((amplitudes.size()[0],1)).to(self.device)
             bl_hole = (self.system_size-self.N_target)*torch.ones((amplitudes.size()[0],1)).to(self.device)
-            ampl_up = torch.heaviside(bl_up-num_up, torch.tensor([0.]).to(self.device))
-            ampl_dn = torch.heaviside(bl_dn-num_dn, torch.tensor([0.]).to(self.device))
-            ampl_hole = torch.heaviside(bl_hole-(sampled_sites-(num_up+num_dn)), torch.tensor([0.]).to(self.device))
+            ampl_up = torch.heaviside(bl_up-num_up, torch.tensor([0.], dtype=self.dtype, device=self.device))
+            ampl_dn = torch.heaviside(bl_dn-num_dn, torch.tensor([0.], dtype=self.dtype, device=self.device))
+            ampl_hole = torch.heaviside(bl_hole-(sampled_sites-(num_up+num_dn)), torch.tensor([0.], dtype=self.dtype, device=self.device))
             ampl = amplitudes * torch.stack([ampl_hole, ampl_dn, ampl_up], axis=1)[:,:,0]
             ampl = torch.nn.functional.normalize(ampl, p=1, eps = 1e-30)
         else:
@@ -246,9 +248,9 @@ class Model(nn.Module):
         y, hidden  = self._forward(full_sigma, hidden, nx, ny)
         # the amplitude is given by a linear layer with a softmax activation
         if not self.weight_sharing or self.rnn_type=="Dilated":
-            ampl = self.lin1[0][nx*self.N_y+ny](y.to(torch.float32))
+            ampl = self.lin1[0][nx*self.N_y+ny](y.to(self.dtype))
         else:
-            ampl = self.lin1(y.to(torch.float32))
+            ampl = self.lin1(y.to(self.dtype))
         ampl = torch.softmax(ampl,dim=1) # amplitude, all elements in a row sum to 1
         if self.sz_tot != None and self.N_target != None:
             ampl = self.enforce_N_total(num_up, num_dn, num_sites, ampl)
@@ -264,7 +266,7 @@ class Model(nn.Module):
         num_dn += sample_dn
         num_sites += 1
         # one hot encode the current sigma to pass it into the GRU at the next time step
-        sigma = nn.functional.one_hot(sample, self.input_size).to(torch.float32).to(self.device)
+        sigma = nn.functional.one_hot(sample, self.input_size).to(self.dtype).to(self.device)
         return sample[:,0], sigma, hidden, num_up, num_dn, num_sites
     
     
@@ -274,7 +276,7 @@ class Model(nn.Module):
         their log probabilities and phases.
         """
         # generate a first input of zeros (sigma and hidden states) to the first GRU cell at t=0
-        sigma       = torch.zeros((num_samples,self.input_size), dtype=torch.float32).to(self.device)
+        sigma       = torch.zeros((num_samples,self.input_size), dtype=self.dtype, device=self.device)
         inputs = {}
         hidden_inputs = []
         for nl in range(self.n_layer):
@@ -285,9 +287,9 @@ class Model(nn.Module):
                     hidden_inputs[nl][str(nx)+str(ny)] = self.init_hidden(num_samples)
         
         samples     = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
-        num_up = torch.zeros((num_samples,1), dtype=torch.float32).to(self.device)
-        num_dn = torch.zeros((num_samples,1), dtype=torch.float32).to(self.device)
-        num_sites = torch.zeros((num_samples,1), dtype=torch.float32).to(self.device)
+        num_up = torch.zeros((num_samples,1), dtype=self.dtype, device=self.device)
+        num_dn = torch.zeros((num_samples,1), dtype=self.dtype, device=self.device)
+        num_sites = torch.zeros((num_samples,1), dtype=self.dtype, device=self.device)
         num = 0
         for ny in range(self.N_y):
             if ny % 2 == 0: #go from left to right    
@@ -343,7 +345,7 @@ class Model(nn.Module):
         num_dn = torch.where(sample_dn==1,num_dn+1,num_dn)
         num_sites += 1
         # one hot encode the current sigma to pass it into the GRU at the next time step
-        sigma = self.one_hot(sample, self.input_size) #.to(torch.float32) #.to(self.device)
+        sigma = self.one_hot(sample, self.input_size).to(self.dtype) #.to(self.device)
         return sigma, ampl, torch.mul(torch.pi,phase), hidden, num_up, num_dn, num_sites
     
     def log_probabilities(self, samples):
@@ -358,7 +360,7 @@ class Model(nn.Module):
         samples = samples.clone().detach()
 
         # generate a first input of zeros (sigma and hidden states) to the first GRU cell at t=0
-        sigma  = torch.zeros((num_samples, self.input_size), dtype=torch.float32).to(self.device)
+        sigma  = torch.zeros((num_samples, self.input_size), dtype=self.dtype, device=self.device)
         inputs = {}
         hidden_inputs = []
         for nl in range(self.n_layer):
@@ -367,9 +369,9 @@ class Model(nn.Module):
                 for nx in range(-1-nl, self.N_x+1+nl):
                     inputs[str(nx)+str(ny)] = sigma
                     hidden_inputs[nl][str(nx)+str(ny)] = self.init_hidden(num_samples)
-        num_up = torch.zeros((num_samples,1), dtype=torch.float32).to(self.device)
-        num_dn = torch.zeros((num_samples,1), dtype=torch.float32).to(self.device)
-        num_sites = torch.zeros((num_samples,1), dtype=torch.float32).to(self.device)
+        num_up = torch.zeros((num_samples,1), dtype=self.dtype, device=self.device)
+        num_dn = torch.zeros((num_samples,1), dtype=self.dtype, device=self.device)
+        num_sites = torch.zeros((num_samples,1), dtype=self.dtype, device=self.device)
         ampl_probs  = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
         phase_probs = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
         ohs         = [[[] for ny in range(self.N_y)] for nx in range(self.N_x)]
@@ -379,8 +381,8 @@ class Model(nn.Module):
                 for nx in range(self.N_x):
                     direction = [-1,-1]
                     sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden, num_up, num_dn, num_sites = self._gen_probs(nx, ny, direction, samples, inputs, hidden_inputs, num, num_up, num_dn, num_sites)
-                    ohs[nx][ny] = sigma.to(torch.float32)
-                    inputs[str(nx)+str(ny)] = sigma.to(torch.float32)
+                    ohs[nx][ny] = sigma.to(self.dtype)
+                    inputs[str(nx)+str(ny)] = sigma.to(self.dtype)
                     hidden_inputs[0][str(nx)+str(ny)] = hidden[0]
                     if self.n_layer > 1: hidden_inputs[1][str(nx)+str(ny)] = hidden[1]
                     num += 1
@@ -388,8 +390,8 @@ class Model(nn.Module):
                 for nx in range(self.N_x-1, -1, -1):
                     direction = [1,-1]
                     sigma, ampl_probs[nx][ny], phase_probs[nx][ny], hidden, num_up, num_dn, num_sites = self._gen_probs(nx, ny, direction, samples, inputs, hidden_inputs, num, num_up, num_dn, num_sites)
-                    ohs[nx][ny] = sigma.to(torch.float32)
-                    inputs[str(nx)+str(ny)] = sigma.to(torch.float32)
+                    ohs[nx][ny] = sigma.to(self.dtype)
+                    inputs[str(nx)+str(ny)] = sigma.to(self.dtype)
                     hidden_inputs[0][str(nx)+str(ny)] = hidden[0]
                     if self.n_layer > 1: hidden_inputs[1][str(nx)+str(ny)] = hidden[1]
                     num += 1
@@ -414,25 +416,3 @@ class Model(nn.Module):
         one_hot = torch.where(mask==True, 1,0)
         return one_hot
 
-
-    def log_probabilities_from_weights(self, samples, weights):
-        l1 = self.rnn.W1.size(0)*self.rnn.W1.size(1)*self.rnn.W1.size(2)
-        self.rnn.W1      = nn.Parameter(weights[0:l1].reshape(self.rnn.W1.size(0),self.rnn.W1.size(1),self.rnn.W1.size(2)))
-        l2 = l1 + self.rnn.b1.size(0)
-        self.rnn.b1      = nn.Parameter(weights[l1:l2].reshape(self.rnn.b1.size(0)))
-        l3 = l2 + self.rnn.W2.size(0)*self.rnn.W2.size(1)*self.rnn.W2.size(2)
-        self.rnn.W2      = nn.Parameter(weights[l2:l3].reshape(self.rnn.W2.size(0),self.rnn.W2.size(1),self.rnn.W1.size(2)))
-        l4 = l3 + self.rnn.b2.size(0)
-        self.rnn.b2      = nn.Parameter(weights[l3:l4].reshape(self.rnn.b2.size(0)))
-        l5 = l4 + self.rnn.Wmerge.size(0)*self.rnn.Wmerge.size(1)
-        self.rnn.Wmerge  = nn.Parameter(weights[l4:l5].reshape(self.rnn.Wmerge.size(0),self.rnn.Wmerge.size(1)))
-        l6 = l5 + self.lin1.weight.size(0)*self.lin1.weight.size(1)
-        self.lin1.weight = nn.Parameter(weights[l5:l6].reshape(self.lin1.weight.size(0), self.lin1.weight.size(1)))
-        l7 = l6 + self.lin1.bias.size(0)
-        self.lin1.bias = nn.Parameter(weights[l6:l7].reshape(self.lin1.bias.size(0)))
-        l8 = l7 + self.lin2.weight.size(0)*self.lin2.weight.size(1)
-        self.lin2.weight = nn.Parameter(weights[l7:l8].reshape(self.lin2.weight.size(0),self.lin2.weight.size(1)))
-        l9 = l8 + self.lin2.bias.size(0)
-        self.lin2.bias = nn.Parameter(weights[l8:l9].reshape(self.lin2.bias.size(0)))
-        l = list(filter(lambda p: p.requires_grad, self.parameters()))
-        return self.log_probabilities(samples)

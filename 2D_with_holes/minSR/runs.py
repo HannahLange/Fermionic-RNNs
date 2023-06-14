@@ -1,7 +1,7 @@
 import os
 
-Nx = 4
-Ny = 4
+Nx = 3
+Ny = 3
 
 Jp = 1
 Jz = 1

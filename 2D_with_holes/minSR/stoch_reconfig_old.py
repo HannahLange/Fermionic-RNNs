@@ -33,15 +33,14 @@ def compute_centered_jacobian(model,samples,batchsize=2000,make_sparse=True):
     jac = torch.cat([jac_ampl,jac_phase], axis=0) 
     if make_sparse: # remove zero values
         non_zero_columns = torch.where(jac.sum(axis=0) != 0)[0]
-        jac_ampl = jac_ampl[:,jac.sum(axis=0)!=0]
-        jac_phase = jac_phase[:,jac.sum(axis=0)!=0]
-        assert jac_ampl.size(1) == non_zero_columns.size(0) and jac_phase.size(1) == non_zero_columns.size(0)
+        jac = jac[:,jac.sum(axis=0)!=0]
+        assert jac.size(1) == non_zero_columns.size(0)
     else:
         non_zero_columns = None
-    return jac_ampl / np.sqrt(jac_ampl.size(0)), jac_phase / np.sqrt(jac_phase.size(0)), non_zero_columns
+    return jac / np.sqrt(jac.size(0)), non_zero_columns
 
 
-def invert(M, rtol=1e-12, onDevice=True):
+def invert(M, E, rtol=1e-12, onDevice=True):
     if onDevice:
         ev, V = torch.linalg.eigh(M)
     else:
@@ -55,28 +54,29 @@ def invert(M, rtol=1e-12, onDevice=True):
     #snr = snr.real
     regularizer = 1. / (1. + (rtol * torch.abs(ev[-1]) / torch.abs(ev))**6) 
     #regularizer *= rho_p / (1. + (2 / snr)**6)
-    Minv = torch.einsum("ij,jk,kl", V, torch.diag(invEv*regularizer).to(torch.complex128),Vt)
+    #print(regularizer)
+    Minv = torch.einsum("ij,jk,kl", V, torch.diag(invEv*regularizer),Vt)
     print("Minv",Minv.dtype)
-    print((torch.abs(torch.matmul(Minv, M)-torch.diag(torch.ones(M.size(0),dtype=torch.float64,device=M.device))).sum()/(M.size(0)*M.size(1))).detach().cpu().numpy())
-    return Minv
+    print(torch.abs(torch.matmul(Minv, M)-torch.diag(torch.ones(M.size(0),dtype=torch.float64,device=M.device))).sum()/(M.size(0)*M.size(1)))
+    MinvE = torch.mv(Minv, E)
+    return MinvE
 
 
-def compute_gradient_with_curvature(Ore, Oim, E, model, epsilon):
-    E = -((E-E.mean()) / np.sqrt(E.size(0)))
-    Tre = torch.matmul(Ore, Ore.t()) + torch.matmul(Oim, Oim.t())
-    Tim = torch.matmul(Oim, Ore.t()) - torch.matmul(Ore, Oim.t())
-    T = torch.complex(Tre, Tim)
+def compute_gradient_with_curvature(O, E, model, epsilon):
+    E = -(E-E.mean()) / np.sqrt(E.size(0))
+    E = torch.cat([(E+torch.conj(E))/2, -1j*(E-torch.conj(E))/2], axis=0).to(torch.float64)
+    print("E", E.dtype)
+    T = torch.matmul(O, torch.conj(O).t())
     T_ = T + torch.diag(torch.ones(T.size(0), device=T.device, dtype=torch.float64)*epsilon)  #torch.diag(1e-4*torch.diag(T.real)) 
-    #T_im = Tim + torch.diag(torch.ones(Tim.size(0), device=Tim.device, dtype=torch.float64)*epsilon)
-    Tinv = invert(T_) #.to(torch.complex128)
-    #Tinv_re = invert(Tre+torch.einsum("ij,jk,kl", Tim,Treinv,Tim))
-    #Tinv_im = -torch.einsum("ij,jk,kl", Treinv,Tim,Tinv_re)
-    #Tinv = torch.complex(Tinv_re, Tinv_im)
-    O = torch.complex(Ore, Oim)
-    TinvE = torch.mv(Tinv, E)
-    δ = torch.real(torch.mv(torch.conj(O).t(),TinvE)).to(torch.float64)
-    inversion_error = torch.real(torch.linalg.norm((torch.mv(T.float(),TinvE.float())-E.float())))/(T.size(0)*T.size(1)) #/(torch.linalg.norm(E))
-    tdvp_error = torch.real(torch.linalg.norm((torch.mv(Ore.float(),δ.float()))-E.real.float()))/E.size()[0] #/(torch.linalg.norm(E))
+    TinvE = invert(T_, E)  #solve_linear_problem(T_,E,1e-12) 
+    #Tinv = torch.linalg.pinv(T.cpu(),rtol=1e-12).real #torch.linalg.pinv(T+torch.diag(torch.ones(T.size(0),device=model.device)*1e-4),rtol=1e-14) 
+    #Tinv = Tinv.to(model.device)
+    #print(torch.abs(torch.matmul(Tinv, T)-torch.diag(torch.ones(T.size(0),device=T.device))).sum()/(T.size(0)*T.size(1)))
+    #TinvE = torch.mv(Tinv, E)
+    δ = torch.real(torch.mv(torch.conj(O).t(),TinvE))
+    print("delta", δ.dtype)
+    inversion_error = torch.real(torch.linalg.norm((torch.mv(T,TinvE)-E)))/E.size()[0] #/(torch.linalg.norm(E))
+    tdvp_error = torch.real(torch.linalg.norm((torch.mv(O,δ))-E))/E.size()[0] #/(torch.linalg.norm(E))
     return δ, inversion_error, tdvp_error
 
 def apply_grads(model,sparse_grad,non_zero_columns):
@@ -103,12 +103,12 @@ def apply_grads(model,sparse_grad,non_zero_columns):
 def run_sr(model, E, samples, optimizer, epsilon=1e-4, scheduler=None):
     """ Runs a minSR step. """
     # Campute the real and imaginary part of the jacobian matrix. 
-    Ore, Oim, indices = compute_centered_jacobian(model, samples)
+    O, indices = compute_centered_jacobian(model, samples)
     # Compute the gradients of the NN parameters from that.
-    sparse_grads, inversion_error, tdvp_error = compute_gradient_with_curvature(Ore, Oim, E, model, epsilon)
+    sparse_grads, inversion_error, tdvp_error = compute_gradient_with_curvature(O, E, model, epsilon)
     # Assign the calculated gradients and make one optimization step.
     cost = torch.linalg.norm(sparse_grads).detach().cpu().numpy()
-    if cost >= 1000:
+    if cost >= 50:
         print("Gradient = "+str(cost)+" --> Cut gradient.")
         sparse_grads *= 1e-8/cost
     apply_grads(model,sparse_grads,indices)
