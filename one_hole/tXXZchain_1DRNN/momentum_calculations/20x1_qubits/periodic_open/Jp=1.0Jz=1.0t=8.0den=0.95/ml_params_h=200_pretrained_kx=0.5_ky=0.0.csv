@@ -1,0 +1,10 @@
+n_samples: 200
+mu_sym: 1
+warmup_steps: 0
+annealing_steps: 2500
+num_epochs: 10000
+max_grad: None
+learning rate: 0.0001
+hidden dimension: 200
+sz total: : 0.5
+T0: 0

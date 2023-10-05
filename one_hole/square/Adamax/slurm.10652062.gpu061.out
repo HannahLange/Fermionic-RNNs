@@ -1,0 +1,10 @@
+1.13.1+cu117
+GPU is available
+Namespace(Jp=1.0, Jz=1.0, U=1.0, t=3.0, density=1.0, Nx=4, Ny=4, bounds=1, boundsx=0, boundsy=0, load_model=0, sym=0.0, antisym=0.0, hd=100)
+4x4_qubits/periodic/Jp=1.0Jz=1.0t=0.0den=1.00/
+Traceback (most recent call last):
+  File "/ssd003/home/hlange/RNN-VMC/one_hole/square/Adamax/run.py", line 67, in <module>
+    save_params(ml_params, fol, fol_ext)
+  File "/ssd003/home/hlange/RNN-VMC/one_hole/square/Adamax/helper.py", line 110, in save_params
+    with open(folder+"ml_params"+fol_ext+".csv", "w") as f:
+FileNotFoundError: [Errno 2] No such file or directory: '4x4_qubits/periodic/Jp=1.0Jz=1.0t=0.0den=1.00/ml_params_h=100_no_antisym.csv'

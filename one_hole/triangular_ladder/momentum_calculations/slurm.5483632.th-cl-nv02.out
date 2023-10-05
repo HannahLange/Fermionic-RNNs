@@ -1,0 +1,1580 @@
+/var/spool/slurmd/job5483632/slurm_script: line 14: ../../ML_Environment/bin/activate: No such file or directory
+1.13.1+cu117
+GPU is available
+Namespace(Jp=1.0, Jz=1.0, Nx=2, Ny=9, U=1.0, antisym=0.0, bounds=1, boundsx=1, boundsy=0, density=0.9444444444444444, hd=100, kx=0.0, ky=0.0, load_model=1, sym=0.0, t=3.0)
+0.5
+2x9_qubits/open_periodic/Jp=1.0Jz=1.0t=3.0den=0.94/
+Use RNN cell with weight sharing.
+Model parameters: 
+rnn.W1: 120000
+rnn.b1: 100
+rnn.W2: 120000
+rnn.b2: 100
+rnn.Wmerge: 20000
+lin1.weight: 300
+lin1.bias: 3
+lin2.weight: 300
+lin2.bias: 3
+Total number of parameters in the network: 260806
+check if ../many_samples/2x9_qubits/open_periodic/Jp=1.0Jz=1.0t=3.0den=0.94/model_params_h=100_no_antisym_annealing.pt exists.
+load ../many_samples/2x9_qubits/open_periodic/Jp=1.0Jz=1.0t=3.0den=0.94/model_params_h=100_no_antisym_annealing.pt
+0.955814522353639
+tensor(0.1840, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0025, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 1/ 500/ t/epoch=1.01............. Loss: 0.07210521, mean(E): -24.92696403+0.01329267j, var(E): 0.37499345, Px: -0.02350097-0.36222710j, Py: 0.43873900-0.01670775j
+1.8713248970311833
+tensor(0.3702, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0057, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+2.7497930764570766
+tensor(0.5351, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0125, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+3.594100365306269
+tensor(0.7255, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0145, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+4.406804435027565
+tensor(0.8459, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0151, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+5.190186047797844
+tensor(1.0193, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0164, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+5.946287641288833
+tensor(1.1588, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0151, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+6.676945418510874
+tensor(1.2947, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0192, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+7.383816212054935
+tensor(1.4346, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0188, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+8.068400111748744
+tensor(1.5324, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0315, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 10/ 500/ t/epoch=0.33............. Loss: 1.28672238, mean(E): -24.90906962-0.04157745j, var(E): 0.57164694, Px: -0.02661697-0.44118141j, Py: 0.43581043-0.02864414j
+8.732059633022425
+tensor(1.6845, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0225, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+9.376036041823156
+tensor(1.8342, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0299, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+10.001463327688514
+tensor(1.8717, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0265, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+10.60938022019789
+tensor(2.0268, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0233, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+11.200740568643203
+tensor(2.1963, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0416, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+11.776422345377446
+tensor(2.1729, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0291, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+12.337235486192071
+tensor(2.2829, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0372, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+12.883928743459228
+tensor(2.4741, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0400, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+13.417195697553232
+tensor(2.6653, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0447, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+13.937680047641447
+tensor(2.4611, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0447, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 20/ 500/ t/epoch=0.33............. Loss: 1.70924481, mean(E): -24.86348744-0.01901195j, var(E): 0.70390097, Px: -0.04032468-0.39669660j, Py: 0.42021598-0.05574155j
+14.445980283086326
+tensor(2.6649, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0431, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+14.942653820485333
+tensor(2.8444, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0437, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+15.428220678061944
+tensor(2.8510, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0691, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+15.903166748138078
+tensor(2.8552, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0464, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+16.367946719316517
+tensor(3.3130, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0653, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+16.822986692426475
+tensor(2.9273, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0672, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+17.268686527954415
+tensor(3.4465, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0542, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+17.705421957370042
+tensor(3.3030, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0499, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+18.133546486283343
+tensor(3.4463, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0909, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+18.553393113586814
+tensor(3.6276, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0849, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 30/ 500/ t/epoch=0.33............. Loss: 3.12069563, mean(E): -24.54268627+0.02673535j, var(E): 1.97148812, Px: -0.01438005-0.45636128j, Py: 0.44217695-0.14343961j
+18.965275887529103
+tensor(3.2912, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0896, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+19.36949131693647
+tensor(3.3856, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.1216, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+19.766319653467548
+tensor(3.2230, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.1383, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+20.1560260587909
+tensor(3.3547, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0972, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+20.53886166886049
+tensor(3.6656, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.0906, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+20.915064565987272
+tensor(3.5303, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.1106, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+21.284860668129554
+tensor(3.5086, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.1167, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+21.648464543720287
+tensor(3.6374, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.1331, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+22.00608015939019
+tensor(3.0216, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.1260, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+22.35790156711096
+tensor(3.5509, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.1569, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 40/ 500/ t/epoch=0.33............. Loss: 0.56674558, mean(E): -24.26608698-0.00484568j, var(E): 4.92303704, Px: 0.03831363-0.52010291j, Py: 0.39852345-0.28353796j
+22.704113536554498
+tensor(3.4660, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.1550, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+23.04489213782739
+tensor(2.7089, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.2331, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+23.380405279181666
+tensor(1.9776, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.2119, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+23.710813203812762
+tensor(2.9013, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.3222, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+24.036268949424382
+tensor(3.5848, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.2473, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+24.356918773859324
+tensor(2.7989, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.3742, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+24.672902549759424
+tensor(2.7784, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6060, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+24.98435413092019
+tensor(3.1256, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.3703, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+25.29140169274181
+tensor(2.7575, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.5188, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+25.59416804894372
+tensor(2.5803, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.4546, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 50/ 500/ t/epoch=0.33............. Loss: 5.72791066, mean(E): -23.63824054+0.13785112j, var(E): 8.04051679, Px: 0.08216097-0.71448463j, Py: 0.31751789-0.61449346j
+25.892770946501432
+tensor(2.4127, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.4089, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+26.18732334057822
+tensor(0.5056, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.5489, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+26.477933651058155
+tensor(2.6415, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7029, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+26.764706002138528
+tensor(1.5439, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6226, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+27.047740446306634
+tensor(1.8617, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8063, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+27.327133173906553
+tensor(1.6507, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6521, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+27.602976709394216
+tensor(0.4035, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8821, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+27.875360095282897
+tensor(0.0631, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9078, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+28.144369064693965
+tensor(1.3926, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9388, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+28.41008620334975
+tensor(1.3487, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7964, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 60/ 500/ t/epoch=0.33............. Loss: 4.90242448, mean(E): -22.91307703-0.15296828j, var(E): 14.08889015, Px: 0.00390508-0.93883414j, Py: 0.21788142-0.72120949j
+28.672591101774263
+tensor(0.1216, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0637, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+28.93196049840362
+tensor(0.2316, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0771, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+29.18826841424999
+tensor(3.9125, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2051, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+29.441586279710364
+tensor(1.6935, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3095, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+29.691983054063563
+tensor(0.5695, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2768, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+29.939525338155754
+tensor(1.5230, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9128, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+30.184277480734988
+tensor(0.1385, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1179, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+30.42630167885971
+tensor(0.3036, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8228, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+30.665658072772985
+tensor(0.0641, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9627, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+30.902404835604635
+tensor(1.5205, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6550, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 70/ 500/ t/epoch=0.33............. Loss: 2.36635312, mean(E): -23.11704352-0.08780079j, var(E): 9.23456270, Px: -0.16453802-0.67859496j, Py: 0.22181921-0.77414539j
+31.136598258235953
+tensor(1.7406, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7159, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+31.368292829636633
+tensor(1.3203, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6990, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+31.597541312960846
+tensor(2.0819, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7651, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+31.82439481766827
+tensor(0.1709, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7897, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+32.0489028679166
+tensor(2.1670, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8358, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+32.27111346745459
+tensor(0.5195, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2347, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+32.491073161228265
+tensor(0.9556, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1346, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+32.70882709389802
+tensor(0.0076, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5365, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+32.92441906545085
+tensor(1.0768, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.7001, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+33.1378915840787
+tensor(0.1784, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1613, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 80/ 500/ t/epoch=0.33............. Loss: 4.12917350, mean(E): -23.00578817-0.12650672j, var(E): 10.43091526, Px: -0.01689850-1.11561022j, Py: -0.07336330-0.71249993j
+33.349285916483026
+tensor(0.0177, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9450, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+33.55864213575416
+tensor(0.2230, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0270, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+33.76599916696461
+tensor(0.0896, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8197, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+33.97139483060594
+tensor(0.5383, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7802, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+34.17486588399057
+tensor(0.4228, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1698, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+34.37644806073172
+tensor(0.1361, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9619, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+34.57617610840772
+tensor(1.4741, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1067, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+34.77408382450987
+tensor(0.0210, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9784, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+34.97020409076687
+tensor(0.0002, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1543, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+--- Start the countdown ---
+35.164568905933066
+tensor(0.0595, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8359, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 90/ 500/ t/epoch=0.33............. Loss: 3.51552581, mean(E): -23.00939594+0.09430069j, var(E): 9.71761776, Px: -0.15547508-0.86986515j, Py: 0.04114348-0.65718662j
+35.35720941712226
+tensor(0.4289, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0932, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+35.54815594976379
+tensor(1.5259, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9300, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+35.73743803625299
+tensor(0.1693, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1123, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+35.925084443363716
+tensor(0.0022, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9973, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+36.11112319848652
+tensor(0.1402, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8782, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+36.29558161475241
+tensor(0.9568, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1800, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+36.47848631509849
+tensor(0.2321, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9796, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+36.659863255328474
+tensor(0.7159, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6234, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+36.839737746218034
+tensor(0.2222, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1917, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+37.01813447471219
+tensor(0.0004, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7761, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 100/ 500/ t/epoch=0.33............. Loss: 5.36703237, mean(E): -22.98475897-0.06979268j, var(E): 16.81578609, Px: -0.05953568-0.76139440j, Py: 0.00327545-0.68447903j
+37.19507752425895
+tensor(3.3710, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.7247, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+37.37059039432116
+tensor(1.0237, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7287, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+37.54469601910627
+tensor(0.8364, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8964, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+37.717416785550945
+tensor(1.0487, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8844, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+37.888774550596274
+tensor(1.7529, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6291, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+38.05879065778657
+tensor(3.0971, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7547, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+38.227485953223365
+tensor(1.6779, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9057, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+38.39488080090454
+tensor(1.8398, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.5579, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+38.56099509747668
+tensor(1.7870, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8468, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+38.72584828642748
+tensor(1.6047, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.5418, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 110/ 500/ t/epoch=0.33............. Loss: 3.04634785, mean(E): -22.93081905-0.02739306j, var(E): 11.99377901, Px: -0.08839550-0.63580540j, Py: 0.20356109-0.54344735j
+38.88945937174337
+tensor(3.7508, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8817, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+39.051846931056595
+tensor(4.2214, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7673, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+39.213029128304186
+tensor(2.4987, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9797, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+39.37302372592075
+tensor(0.7846, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0518, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+39.531848096585165
+tensor(1.4545, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0271, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+39.68951923454094
+tensor(0.0524, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9093, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+39.84605376650844
+tensor(0.1300, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0051, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+40.00146796220672
+tensor(1.1381, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9679, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+40.15577774450135
+tensor(0.5952, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4297, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+40.30899869919436
+tensor(1.3156, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3722, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 120/ 500/ t/epoch=0.33............. Loss: 3.63142133, mean(E): -21.74929984-0.00968139j, var(E): 13.84692113, Px: -0.08352650-1.05472108j, Py: 0.18065863-0.76788515j
+40.461146084471096
+tensor(1.5856, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3478, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+40.612234840018466
+tensor(0.9450, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4210, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+40.762279595828154
+tensor(0.4512, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1368, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+40.91129468069777
+tensor(0.8038, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9730, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+41.059294130442275
+tensor(0.1580, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4693, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+41.206291695827446
+tensor(0.1798, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1114, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+41.35230085023671
+tensor(2.9298, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2309, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+41.4973347970818
+tensor(1.9096, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(2.0350, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+41.641406476967674
+tensor(0.0455, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2744, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+41.78452857462128
+tensor(0.2575, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4467, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 130/ 500/ t/epoch=0.33............. Loss: 4.50640668, mean(E): -21.73426114+0.04933190j, var(E): 18.38690643, Px: -0.00666966-0.84698304j, Py: 0.07850579-1.00683390j
+41.92671352559343
+tensor(0.0873, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2469, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+42.06797352274275
+tensor(0.0964, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0837, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+42.208320522510036
+tensor(0.0525, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9079, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+42.3477662509912
+tensor(0.2092, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4610, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+42.48632220981639
+tensor(0.5263, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4147, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+42.62399968184282
+tensor(0.0692, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.6084, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+42.760809736668165
+tensor(1.0857, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2578, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+42.896763235971456
+tensor(0.1831, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0867, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+43.03187083868774
+tensor(0.0051, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9089, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+43.16614300602279
+tensor(0.4244, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0063, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 140/ 500/ t/epoch=0.33............. Loss: 3.01683173, mean(E): -21.94096124+0.23716809j, var(E): 15.24781560, Px: 0.15679128-0.81220714j, Py: 0.09915613-0.71130240j
+43.299590006313764
+tensor(0.0394, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9445, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+43.43222191974129
+tensor(0.4750, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8621, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+43.56404864289865
+tensor(0.1894, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9426, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+43.695079893223074
+tensor(0.0128, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9681, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+43.82532521329405
+tensor(0.5524, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8573, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+43.95479397500364
+tensor(0.7219, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1090, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+44.08349538360307
+tensor(0.0313, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9828, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+44.211438481630196
+tensor(0.1058, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9214, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+44.33863215272191
+tensor(0.5430, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7583, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+44.46508512531551
+tensor(0.2452, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8001, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 150/ 500/ t/epoch=0.34............. Loss: 2.51391070, mean(E): -22.37295881+0.18492113j, var(E): 12.39169466, Px: -0.14498689-0.76868111j, Py: 0.07426167-0.55574073j
+44.590805976243026
+tensor(0.3615, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7641, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+44.71580313422192
+tensor(0.0488, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8817, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+44.840084883246085
+tensor(1.5726, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9756, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+44.96365936588019
+tensor(0.0135, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9793, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+45.086534586460935
+tensor(0.0117, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1639, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+45.20871841420818
+tensor(1.6323, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8584, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+45.330218586249025
+tensor(0.2593, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7302, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+45.4510427105578
+tensor(0.3740, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8946, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+45.57119826881473
+tensor(0.0509, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8566, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+45.69069261918584
+tensor(0.0325, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6037, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 160/ 500/ t/epoch=0.33............. Loss: 1.89239389, mean(E): -22.27042537+0.08387942j, var(E): 13.13232020, Px: 0.09169718-0.55478548j, Py: 0.02668250-0.59399404j
+45.80953299902688
+tensor(0.0432, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6981, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+45.92772652751368
+tensor(0.0151, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0118, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+46.04528020820121
+tensor(0.0645, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1979, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+46.16220093151382
+tensor(1.0688, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1251, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+46.27849547716881
+tensor(0.0034, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7390, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+46.39417051653535
+tensor(0.0178, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7350, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+46.509232614930994
+tensor(0.2380, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7923, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+46.623688233857656
+tensor(0.0830, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9516, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+46.73754373317895
+tensor(0.2259, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6038, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+46.85080537324071
+tensor(0.0598, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7840, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 170/ 500/ t/epoch=0.34............. Loss: 2.01908272, mean(E): -22.32578868+0.10661457j, var(E): 10.40234472, Px: 0.04294515-0.66623142j, Py: -0.03573690-0.62676895j
+46.963479316936564
+tensor(0.0011, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6510, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.07557163172015
+tensor(0.2115, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8927, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.187088291565686
+tensor(0.2328, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8795, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.29803517887843
+tensor(0.1495, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8781, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.40841808635658
+tensor(0.0535, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8323, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.51824271880615
+tensor(0.0549, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8262, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.62751469491008
+tensor(0.0318, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8613, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.736239548953144
+tensor(0.6920, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8923, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.84442273250386
+tensor(0.1147, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9134, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+47.95206961605468
+tensor(0.2202, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6779, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 180/ 500/ t/epoch=0.33............. Loss: 0.67878794, mean(E): -22.56410251-0.00338724j, var(E): 10.63006891, Px: -0.01128771-0.60387883j, Py: 0.06777019-0.58498121j
+48.05918549062178
+tensor(0.7120, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7880, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+48.165775569305566
+tensor(0.5519, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8761, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+48.271844988813015
+tensor(0.0855, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9926, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+48.3773988109431
+tensor(0.0010, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6774, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+48.48244202403626
+tensor(0.0688, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0858, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+48.58697954438892
+tensor(0.3714, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8904, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+48.69101621763418
+tensor(0.0071, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7817, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+48.79455682008964
+tensor(0.0082, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7510, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+48.8976060600731
+tensor(0.0514, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8075, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.00016857918732
+tensor(0.1938, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9137, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 190/ 500/ t/epoch=0.33............. Loss: 2.47274493, mean(E): -22.68341698+0.09958646j, var(E): 11.11373186, Px: 0.06658638-0.74871087j, Py: 0.06288831-0.60973305j
+49.10224895357452
+tensor(0.3033, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1539, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.203851695141545
+tensor(0.1255, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8720, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.30498125275648
+tensor(0.0139, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0437, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.40564201341759
+tensor(0.0002, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0490, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.50583830339522
+tensor(0.0713, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0554, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.60557438934748
+tensor(0.2431, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7689, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.7048544794105
+tensor(0.1173, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8529, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.803682724263766
+tensor(0.0027, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8606, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+49.90206321817141
+tensor(0.0184, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8274, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.0
+tensor(0.0025, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0570, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 200/ 500/ t/epoch=0.34............. Loss: 2.63117694, mean(E): -22.54311389+0.25406055j, var(E): 11.04422235, Px: -0.07484215-0.76381720j, Py: 0.00701090-0.68814436j
+50.097497054213406
+tensor(0.0606, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7904, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.194558311845526
+tensor(0.3439, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9922, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.291187651451374
+tensor(0.0006, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0543, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.387388900037
+tensor(0.0435, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2125, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.48316583396897
+tensor(0.0397, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1417, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.5785221798639
+tensor(0.3253, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7371, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.673461615458514
+tensor(0.1597, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1039, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.76798777046071
+tensor(0.2201, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7970, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.86210422738229
+tensor(0.1533, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6988, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+50.955814522353634
+tensor(0.9508, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1779, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 210/ 500/ t/epoch=0.33............. Loss: 5.99768210, mean(E): -22.95791006-0.02075581j, var(E): 10.51991665, Px: -0.19351357-0.89144758j, Py: 0.13660132-0.60093848j
+51.049122145920954
+tensor(0.2326, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9668, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.14203054382639
+tensor(0.0790, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8132, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.23454311777154
+tensor(0.0243, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8860, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.32666322616484
+tensor(0.2297, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7822, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.41839418485308
+tensor(0.1940, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8067, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.50973926783756
+tensor(0.0186, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8624, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.600701707975304
+tensor(0.0157, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9708, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.691284697665516
+tensor(0.2802, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8304, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.781491389521946
+tensor(0.2174, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9248, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+51.87132489703118
+tensor(0.0008, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6926, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 220/ 500/ t/epoch=0.33............. Loss: 3.14096603, mean(E): -22.80395460-0.03413664j, var(E): 10.11122972, Px: -0.05725477-0.67207328j, Py: -0.00389015-0.46471068j
+51.960788295197524
+tensor(0.0899, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0875, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.04988462117453
+tensor(0.0009, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7998, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.138616874883695
+tensor(0.0370, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7788, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.22698801962055
+tensor(0.4468, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8699, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.31500098264846
+tensor(0.1288, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9041, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.402658655780456
+tensor(0.0123, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0534, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.48996389594933
+tensor(0.0255, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6853, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.57691952576637
+tensor(0.0388, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7019, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.66352833406893
+tensor(0.1086, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8901, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.749793076457074
+tensor(0.5695, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7040, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 230/ 500/ t/epoch=0.33............. Loss: 2.56085798, mean(E): -22.89137696-0.14987325j, var(E): 10.35827326, Px: -0.08258583-0.63690185j, Py: -0.10390897-0.51153534j
+52.835716475819716
+tensor(0.0002, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8359, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+52.92130122285027
+tensor(0.0104, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9839, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.00654997655224
+tensor(0.5464, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8810, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.091465364734944
+tensor(0.3852, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0378, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.17604998449954
+tensor(0.7183, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8510, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.2603064027156
+tensor(0.0620, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7807, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.344237156488575
+tensor(0.0944, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9309, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.42784475361816
+tensor(0.9513, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9538, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.511131673047906
+tensor(0.2025, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1275, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.594100365306275
+tensor(0.6428, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8580, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 240/ 500/ t/epoch=0.34............. Loss: 4.53176820, mean(E): -22.89969876-0.06666228j, var(E): 7.90776268, Px: -0.04043750-0.64056849j, Py: 0.10951768-0.62458569j
+53.67675325293919
+tensor(0.0546, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8222, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.759092730934576
+tensor(0.3112, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9187, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.841121167138674
+tensor(0.0435, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8964, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+53.922840902664625
+tensor(0.3071, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7301, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.00425425229347
+tensor(0.3233, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0392, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.08536350486746
+tensor(0.1131, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9874, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.16617092367625
+tensor(7.1290e-05, device='cuda:0', dtype=torch.float64,
+       grad_fn=<MulBackward0>)
+tensor(0.9300, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.246678746835805
+tensor(0.4334, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9156, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.32688918766038
+tensor(0.1572, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8787, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.40680443502757
+tensor(0.0256, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8625, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 250/ 500/ t/epoch=0.33............. Loss: 1.73078362, mean(E): -22.84711641+0.02859853j, var(E): 7.85733025, Px: -0.00339068-0.64176540j, Py: 0.02168177-0.61708534j
+54.4864266537368
+tensor(0.0065, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7910, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.56575798486114
+tensor(0.0199, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8205, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.64480054609279
+tensor(0.4134, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7200, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.72355643208224
+tensor(0.1401, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9716, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.80202771477137
+tensor(0.0016, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8719, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.88021644372054
+tensor(0.0298, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6092, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+54.95812464642974
+tensor(0.5150, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.5684, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.035754328654086
+tensor(0.0833, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7912, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.11310747471365
+tensor(0.0379, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.9168, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.19018604779784
+tensor(1.5386, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7524, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 260/ 500/ t/epoch=0.33............. Loss: 5.97167742, mean(E): -22.67852641+0.04883100j, var(E): 13.34475764, Px: -0.01585225-0.59229729j, Py: 0.16696972-0.57516399j
+55.266991990264316
+tensor(0.1919, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8057, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.343527223932696
+tensor(0.0004, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7103, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.41979365037311
+tensor(0.0163, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9743, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.495793151189666
+tensor(0.0004, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.5203, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.571527588299006
+tensor(0.0032, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6664, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.646998804204
+tensor(0.2687, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.5619, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.72220862226273
+tensor(0.9000, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8327, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.797158846952755
+tensor(0.3597, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8571, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.87185126413097
+tensor(0.2586, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0067, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+55.94628764128884
+tensor(0.0239, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7279, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 270/ 500/ t/epoch=0.33............. Loss: 2.80478521, mean(E): -22.96152223-0.21844630j, var(E): 11.01101431, Px: -0.06601781-0.57108630j, Py: 0.02065122-0.56955931j
+56.02046972780342
+tensor(5.9816e-06, device='cuda:0', dtype=torch.float64,
+       grad_fn=<MulBackward0>)
+tensor(0.8561, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.09439925518406
+tensor(0.0002, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9628, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.16807793731482
+tensor(0.0007, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7835, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.241507470692966
+tensor(0.0396, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1194, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.3146895346633
+tensor(0.1437, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7600, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.38762579164867
+tensor(0.0459, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0495, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.46031788737646
+tensor(0.2348, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0429, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.53276745110153
+tensor(0.2676, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9121, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.60497609582522
+tensor(0.0290, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9140, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.67694541851087
+tensor(0.2317, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8022, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 280/ 500/ t/epoch=0.33............. Loss: 2.38469852, mean(E): -22.92770183+0.08210885j, var(E): 8.33621621, Px: 0.04590433-0.59382900j, Py: 0.06394467-0.59583449j
+56.748677000295764
+tensor(0.8594, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2724, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.8201724066995
+tensor(0.0689, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0138, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.89143318782903
+tensor(0.2528, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9630, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+56.962460878580345
+tensor(0.4626, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9914, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.03325699883679
+tensor(0.0992, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0166, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.103823053664236
+tensor(0.0600, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9482, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.174160533503084
+tensor(0.0141, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7665, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.244270914357124
+tensor(0.1475, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7918, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.31415565797935
+tensor(0.0731, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9173, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.38381621205494
+tensor(0.3353, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1706, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 290/ 500/ t/epoch=0.33............. Loss: 2.64274676, mean(E): -22.88812059-0.02172138j, var(E): 8.89659333, Px: -0.00407007-0.84062848j, Py: -0.07644077-0.55974236j
+57.45325401038106
+tensor(0.0195, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9384, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.52247047304403
+tensor(0.1635, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0319, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.591467006593554
+tensor(0.0584, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1937, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.66024500421422
+tensor(0.0197, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8568, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.728805845894286
+tensor(0.0275, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8646, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.797150898591845
+tensor(0.1264, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0100, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.86528151639831
+tensor(0.0598, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2851, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+57.93319904069947
+tensor(0.0431, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0351, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.00090480033383
+tensor(0.3674, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0307, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.068400111748744
+tensor(0.0092, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8980, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 300/ 500/ t/epoch=0.33............. Loss: 2.19710445, mean(E): -22.85339590+0.09348979j, var(E): 8.98086495, Px: 0.05968998-0.56931053j, Py: 0.01258661-0.67017614j
+58.135686279153894
+tensor(0.0338, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1645, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.20276459467259
+tensor(0.0247, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9117, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.269636338490535
+tensor(0.0559, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7736, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.336302779002594
+tensor(0.0872, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0593, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.40276517295696
+tensor(0.2585, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0261, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.469024765597474
+tensor(0.0706, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0143, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.53508279080349
+tensor(0.2411, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9297, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.60094047122782
+tensor(0.1954, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8047, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.66659901843248
+tensor(0.1874, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6524, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.73205963302242
+tensor(0.0900, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9251, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 310/ 500/ t/epoch=0.33............. Loss: 3.12164982, mean(E): -22.88898814-0.06897278j, var(E): 6.50965287, Px: -0.00972081-0.59797930j, Py: 0.03915456-0.65571833j
+58.797323504777296
+tensor(0.0967, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9556, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.86239181278117
+tensor(0.3471, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6779, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.927265725550356
+tensor(0.3317, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8155, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+58.99194640115933
+tensor(0.1193, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8912, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.05643498736476
+tensor(0.0682, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8784, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.1207326217277
+tensor(0.1336, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7620, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.18484043173403
+tensor(8.0310e-08, device='cuda:0', dtype=torch.float64,
+       grad_fn=<MulBackward0>)
+tensor(0.9869, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.248759534913056
+tensor(0.0298, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8278, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.312491038954384
+tensor(0.0192, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9783, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.376036041823156
+tensor(0.0378, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8542, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 320/ 500/ t/epoch=0.34............. Loss: 2.65073449, mean(E): -22.88621400-0.06743668j, var(E): 10.81661028, Px: -0.02297034-0.57756073j, Py: 0.02522322-0.62107909j
+59.439395631873474
+tensor(0.2954, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0795, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.5025708879603
+tensor(0.9774, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0609, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.56556287954966
+tensor(0.0084, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7591, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.628372666827275
+tensor(0.0502, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8793, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.691001300805645
+tensor(0.0025, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0046, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.753449823429506
+tensor(0.0042, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9281, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.815719267679945
+tensor(0.0551, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0764, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.877810657676825
+tensor(0.0090, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8080, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+59.93972500877993
+tensor(0.0223, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8509, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.00146332768852
+tensor(0.0003, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1796, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 330/ 500/ t/epoch=0.33............. Loss: 3.37789088, mean(E): -22.95688971+0.03990769j, var(E): 7.01787442, Px: 0.04301205-0.68817998j, Py: 0.00217341-0.71370712j
+60.06302661253958
+tensor(0.0944, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0318, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.12441585300468
+tensor(0.1265, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8674, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.185632030385335
+tensor(0.0057, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9435, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.246676117707246
+tensor(0.7915, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2742, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.307549079812986
+tensor(0.5336, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7944, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.368251873453595
+tensor(0.7391, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2366, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.42878544737874
+tensor(0.1136, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9134, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.48915074242574
+tensor(0.0300, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9922, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.54934869160727
+tensor(0.0554, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1610, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.60938022019789
+tensor(0.0693, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6995, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 340/ 500/ t/epoch=0.34............. Loss: 3.03767676, mean(E): -23.17038937-0.04609759j, var(E): 6.98202360, Px: -0.00537216-0.54175521j, Py: -0.03381958-0.53246975j
+60.66924624581939
+tensor(0.6019, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2442, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.72894767852496
+tensor(0.1769, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9835, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.78848542088217
+tensor(0.0495, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3674, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.84786036805485
+tensor(1.1268, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1529, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.90707340788389
+tensor(0.0001, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0287, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+60.96612542096685
+tensor(0.1255, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0430, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.02501728073649
+tensor(0.0016, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7929, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.083749853538436
+tensor(0.5635, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1743, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.142323998707504
+tensor(0.0028, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9014, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.200740568643205
+tensor(0.0323, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9863, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 350/ 500/ t/epoch=0.34............. Loss: 2.60918743, mean(E): -23.11707918+0.05760004j, var(E): 11.41286026, Px: 0.01845053-0.65095111j, Py: -0.02297370-0.61813091j
+61.259000408884155
+tensor(0.3496, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1993, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.31710435818154
+tensor(0.1499, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8515, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.37505324857151
+tensor(0.3500, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7355, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.43284790544676
+tensor(0.0241, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9256, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.49048914762697
+tensor(0.0537, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0974, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.54797778742845
+tensor(0.0442, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9678, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.60531463073289
+tensor(0.5379, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5128, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.66250047705502
+tensor(0.5319, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0037, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.71953611960961
+tensor(0.0310, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8991, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.77642234537745
+tensor(0.0594, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9838, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 360/ 500/ t/epoch=0.33............. Loss: 2.57961134, mean(E): -23.11656363-0.02048848j, var(E): 8.86192281, Px: -0.03737639-0.62462163j, Py: -0.03101913-0.63723840j
+61.83315993517048
+tensor(0.0962, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.6537, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.88974966369612
+tensor(0.0266, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2992, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+61.946192299620776
+tensor(0.0563, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0710, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.00248860563238
+tensor(0.1243, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9127, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.05863933850235
+tensor(0.1181, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0070, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.11464524914655
+tensor(0.0102, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0277, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.17050708268557
+tensor(0.1691, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1638, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.22622557850419
+tensor(0.0632, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0755, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.28180147031015
+tensor(0.0241, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8139, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.337235486192064
+tensor(0.2411, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8535, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 370/ 500/ t/epoch=0.34............. Loss: 1.30012030, mean(E): -22.99480145+0.04286999j, var(E): 7.70533257, Px: 0.01376290-0.57063026j, Py: -0.06219519-0.59912134j
+62.39252834867669
+tensor(0.0101, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9166, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.447680774785375
+tensor(0.2046, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9241, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.50269347608995
+tensor(0.0279, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2979, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.557567158767725
+tensor(0.0096, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1368, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.61230252365591
+tensor(0.0015, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8290, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.666900266305326
+tensor(0.1069, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9511, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.72136107703341
+tensor(0.0199, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2209, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.77568564097666
+tensor(0.0062, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9745, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.82987463814227
+tensor(0.0239, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1972, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.88392874345923
+tensor(0.5901, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8006, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 380/ 500/ t/epoch=0.33............. Loss: 2.97003177, mean(E): -23.07663028-0.21010670j, var(E): 9.49313468, Px: 0.00436541-0.55339908j, Py: 0.09686686-0.57471130j
+62.93784862682876
+tensor(0.0934, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8862, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+62.99163495317418
+tensor(0.2711, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5115, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.04528838249001
+tensor(0.0849, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.7664, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.09880956989063
+tensor(0.3242, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0767, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.152199165658274
+tensor(0.0009, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2503, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.20545781529042
+tensor(0.5343, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0368, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.258586159546596
+tensor(0.1308, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.6943, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.31158483449466
+tensor(0.0637, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8782, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.36445447155653
+tensor(0.0494, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9377, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.41719569755323
+tensor(0.0029, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1134, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 390/ 500/ t/epoch=0.34............. Loss: 2.33835334, mean(E): -23.06285422+0.02609474j, var(E): 8.45240641, Px: 0.01462990-0.60110591j, Py: 0.00673691-0.71866567j
+63.46980913474957
+tensor(0.2197, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1063, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.52229540089813
+tensor(0.0360, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1643, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.574655109282816
+tensor(1.5128e-05, device='cuda:0', dtype=torch.float64,
+       grad_fn=<MulBackward0>)
+tensor(1.1237, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.62688886876187
+tensor(0.2398, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9549, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.678997283810304
+tensor(0.0757, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5977, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.730980954561915
+tensor(0.0346, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1545, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.78284047685072
+tensor(0.1271, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9450, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.834576442251986
+tensor(0.0635, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8875, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.88618943812266
+tensor(0.0205, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3059, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+63.93768004764144
+tensor(0.0646, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9443, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 400/ 500/ t/epoch=0.33............. Loss: 1.74619077, mean(E): -23.15979683-0.01207152j, var(E): 6.63232408, Px: -0.03345478-0.50639567j, Py: -0.03178995-0.69425384j
+63.98904884984825
+tensor(0.1039, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2462, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.04029641968334
+tensor(0.2231, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9757, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.09142332802591
+tensor(0.1529, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9975, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.14243014173225
+tensor(0.1146, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9894, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.19331742367343
+tensor(0.0147, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3638, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.24408573277265
+tensor(0.0904, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0310, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.29473562404195
+tensor(0.3810, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9827, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.34526764861874
+tensor(0.3442, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9174, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.39568235380169
+tensor(0.0047, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9734, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.44598028308633
+tensor(0.3334, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9066, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 410/ 500/ t/epoch=0.34............. Loss: 1.10866816, mean(E): -23.16125549+0.02775080j, var(E): 7.45138006, Px: -0.03994448-0.65987750j, Py: 0.07192364-0.51764273j
+64.49616197620023
+tensor(0.0022, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1286, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.54622796913772
+tensor(0.4490, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9676, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.59617879419423
+tensor(0.0027, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0319, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.64601498000032
+tensor(0.8575, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1104, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.69573705155511
+tensor(0.0887, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0836, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.74534553025963
+tensor(0.1732, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8522, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.79484093394947
+tensor(0.2212, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9958, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.84422377692735
+tensor(0.0884, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3053, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.89349456999508
+tensor(4.2171e-05, device='cuda:0', dtype=torch.float64,
+       grad_fn=<MulBackward0>)
+tensor(1.2460, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+64.94265382048533
+tensor(0.9651, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3488, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 420/ 500/ t/epoch=0.33............. Loss: 4.18033119, mean(E): -23.17169867+0.02693108j, var(E): 7.83024802, Px: -0.08291988-0.70405141j, Py: 0.12190611-0.73673529j
+64.99170203229292
+tensor(1.6033, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4011, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.04063970590585
+tensor(0.5061, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2555, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.08946733843592
+tensor(0.0872, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1545, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.13818542364909
+tensor(0.0494, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9776, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.18679445199531
+tensor(0.3565, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9184, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.23529491063827
+tensor(0.0817, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2725, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.28368728348465
+tensor(0.9264, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0407, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.33197205121309
+tensor(0.7942, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0495, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.38014969130279
+tensor(0.0783, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1196, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.42822067806195
+tensor(0.0077, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3002, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 430/ 500/ t/epoch=0.34............. Loss: 1.35987233, mean(E): -22.97964999+0.06971226j, var(E): 7.46132743, Px: -0.02079760-0.61281908j, Py: -0.01086123-0.78615094j
+65.47618548265567
+tensor(0.0059, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8703, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.52404457313375
+tensor(0.0275, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4294, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.57179841445806
+tensor(0.0002, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2973, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.61944746852959
+tensor(9.0280e-05, device='cuda:0', dtype=torch.float64,
+       grad_fn=<MulBackward0>)
+tensor(1.6280, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.66699219421537
+tensor(0.3870, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3235, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.71443304737488
+tensor(0.1656, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0205, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.76177048088636
+tensor(0.5687, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3145, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.80900494467264
+tensor(0.1528, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0455, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.85613688572691
+tensor(0.0132, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1959, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.90316674813808
+tensor(0.6059, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9452, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 440/ 500/ t/epoch=0.33............. Loss: 2.52765814, mean(E): -23.09023766-0.00854938j, var(E): 7.17041010, Px: 0.00234557-0.64857345j, Py: -0.09588249-0.54449822j
+65.95009497311581
+tensor(0.0757, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.6501, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+65.99692199901543
+tensor(0.0636, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0903, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.04364826136246
+tensor(0.3288, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0014, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.09027419287695
+tensor(0.1394, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1961, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.13680022349749
+tensor(0.0240, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4248, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.18322678040501
+tensor(0.2292, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.9486, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.22955428804632
+tensor(0.0031, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3544, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.2757831681574
+tensor(0.0075, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2574, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.32191383978642
+tensor(0.4064, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.8558, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.36794671931652
+tensor(0.1040, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2411, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 450/ 500/ t/epoch=0.33............. Loss: 1.49685198, mean(E): -23.12891772-0.01487763j, var(E): 7.77687513, Px: -0.01045760-0.59056516j, Py: -0.03958227-0.76566272j
+66.41388222048839
+tensor(0.0562, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2779, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.45972075442256
+tensor(0.0013, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2116, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.5054627296415
+tensor(0.1217, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4186, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.55110855209143
+tensor(0.0052, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1062, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.596658625164
+tensor(0.5360, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4829, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.64211334971758
+tensor(0.0821, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0238, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.68747312409853
+tensor(1.4648e-06, device='cuda:0', dtype=torch.float64,
+       grad_fn=<MulBackward0>)
+tensor(0.7499, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.73273834416207
+tensor(0.0697, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3431, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.77790940329305
+tensor(0.3512, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1660, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.82298669242648
+tensor(0.4572, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.9925, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 460/ 500/ t/epoch=0.34............. Loss: 2.80155057, mean(E): -22.93814882-0.11917603j, var(E): 8.84675852, Px: 0.00639117-0.61645212j, Py: -0.08271758-0.60219463j
+66.86797060006774
+tensor(0.0254, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.9929, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.91286151231279
+tensor(0.6548, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.7598, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+66.95765981286794
+tensor(0.0160, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4977, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.00236588306966
+tensor(0.0172, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4323, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.04698010190391
+tensor(0.2331, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5299, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.09150284602552
+tensor(0.4182, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3105, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.13593448977723
+tensor(0.0004, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(0.8346, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.18027540520859
+tensor(0.2519, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2153, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.22452596209465
+tensor(0.0639, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(2.0609, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.26868652795442
+tensor(1.1371, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.6812, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 470/ 500/ t/epoch=0.33............. Loss: 2.79368370, mean(E): -23.07686844-0.20167376j, var(E): 8.48815151, Px: 0.01674087-0.71174230j, Py: -0.13001363-0.86199451j
+67.31275746806928
+tensor(0.0096, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2002, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.35673914550098
+tensor(0.1730, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0499, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.40063192110975
+tensor(0.1887, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4252, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.4444361535719
+tensor(0.0494, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0263, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.48815219939748
+tensor(0.1234, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(2.1323, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.53178041294771
+tensor(0.4286, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5019, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.57532114645221
+tensor(0.0686, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4556, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.618774750026
+tensor(0.0074, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.0659, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.66214157168646
+tensor(0.3698, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5381, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.70542195737005
+tensor(0.7986, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.1610, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 480/ 500/ t/epoch=0.33............. Loss: 2.53771503, mean(E): -23.05564967-0.14167340j, var(E): 8.44331540, Px: -0.00472752-0.67878947j, Py: -0.10860653-0.62981308j
+67.7486162509488
+tensor(0.1250, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4145, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.7917247942468
+tensor(0.4198, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3585, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.83474792705636
+tensor(0.3399, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.8826, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.87768598715408
+tensor(0.0048, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.6573, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.92053931031683
+tensor(0.0048, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.6536, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+67.96330823033743
+tensor(0.0552, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.9067, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.00599307904027
+tensor(0.0699, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.6618, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.0485941862968
+tensor(0.6965, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.8213, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.09111188004074
+tensor(0.1266, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(2.2480, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.13354648628335
+tensor(0.0681, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.2575, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 490/ 500/ t/epoch=0.33............. Loss: 4.29197959, mean(E): -23.02963385-0.00757608j, var(E): 6.68915680, Px: -0.02654766-0.64341950j, Py: -0.03162346-0.71332363j
+68.17589832912827
+tensor(0.0665, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(2.2241, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.21816773078653
+tensor(0.4543, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.8706, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.26035501159116
+tensor(0.0009, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5577, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.30246049001177
+tensor(0.0011, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.3300, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.344484482669
+tensor(0.0070, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(2.1778, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.38642730434883
+tensor(0.0103, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.5236, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.42828926801661
+tensor(0.0165, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.9335, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.47007068483121
+tensor(0.2444, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.4693, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.51177186415886
+tensor(0.0117, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.6026, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+68.55339311358681
+tensor(2.2444, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+tensor(1.9562, device='cuda:0', dtype=torch.float64, grad_fn=<MulBackward0>)
+Epoch: 500/ 500/ t/epoch=0.33............. Loss: 4.39580245, mean(E): -22.98215980-0.07593554j, var(E): 10.80122904, Px: 0.07470620-0.65071252j, Py: 0.18094048-1.00166516j
+python3: can't open file 'tests.py': [Errno 2] No such file or directory
