@@ -1,6 +1,6 @@
 # Fermionic-RNNs
 <div align="center">
-    <img width="644" alt="RNN_architecture" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/571fb17e-2b20-4574-a060-dcc090394ae5">
+    <img width="444" alt="RNN_architecture" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/571fb17e-2b20-4574-a060-dcc090394ae5">
 </div>
 
 
