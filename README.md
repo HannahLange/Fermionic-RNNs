@@ -4,15 +4,10 @@
 </div>
 
 
-RNN implementation to simulate the bosonic and fermionic t-J model, or its general form, the $t$-XXZ model,
-
-\[
-\mathcal{H}_{tXXZ} = -t \sum_{\langle \vec{i},\vec{j}\rangle, \sigma} \mathcal{P}_G \left( \hat{c}^{\dagger}_{\vec{i},\sigma} \hat{c}_{\vec{j},\sigma} + \mathrm{h.c.} \right) \mathcal{P}_G
-+ J_z \sum_{\langle\vec{i},\vec{j}\rangle} \left( \hat{S}^z_{\vec{i}} \cdot \hat{S}^z_{\vec{j}} - \frac{1}{4} \hat{n}_{\vec{i}} \hat{n}_{\vec{i}} \right) + J_{\pm} \sum_{\langle\vec{i},\vec{j}\rangle} \frac{1}{2} \left( \hat{S}^+_{\vec{i}} \cdot \hat{S}^-_{\vec{j}} + \hat{S}^-_{\vec{i}} \cdot \hat{S}^+_{\vec{j}} \right).
-\]
-
-
-
+RNN implementation to simulate the bosonic and fermionic t-J model, or its general form, the $t$-XXZ model:
+<div align="center">
+    ![Image 05 10 23 at 14 57](https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/2b901483-c225-49bd-8def-7d15855cd6c0)
+</div>
 
 The data shown in the paper and code for 0 and 1 holes are provided in "one_hole/", for several holes in "more_holes/".
 
