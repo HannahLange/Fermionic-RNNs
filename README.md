@@ -1,5 +1,7 @@
 # Fermionic-RNNs
-<img width="600" alt="Convergence_overview_tJz" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/1a4e3f1e-0280-4e79-9dad-270b6cb13d37">
+<div align="center">
+    <img width="600" alt="Convergence Overview" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/1a4e3f1e-0280-4e79-9dad-270b6cb13d37">
+</div>
 
 
 RNN implementation to simulate the bosonic and fermionic t-J model. The data shown in the paper and code for 0 and 1 holes are provided in "one_hole/", for several holes in "more_holes/".
