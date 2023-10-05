@@ -1,4 +1,4 @@
-![CodeCogsEqn](https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/6e426540-84f0-4cd3-adbe-c6d7e12005b6)# Fermionic-RNNs
+# Fermionic-RNNs
 <div align="center">
     <img width="600" alt="Convergence Overview" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/1a4e3f1e-0280-4e79-9dad-270b6cb13d37">
 </div>
