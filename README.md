@@ -1,5 +1,6 @@
 # Fermionic-RNNs
-<img width="708" alt="tJz_dispersion_10x4" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/bd651b1c-9d67-4c25-916c-dfe8a8f78bc3">
+<img width="600" alt="Convergence_overview_tJz" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/1a4e3f1e-0280-4e79-9dad-270b6cb13d37">
+
 
 RNN implementation to simulate the bosonic and fermionic t-J model. The data shown in the paper and code for 0 and 1 holes are provided in "one_hole/", for several holes in "more_holes/".
 
@@ -10,4 +11,4 @@ In order to run the Code, run.py (or run_sr.py and stoch_reconfig.py), helper.py
 for a bosonic $N_x\times N_y=4\times 4$ square lattice system with open boundaries (boundsx=boundsy=0), $t=3$, $J_\pm=J_z=1$ and hidden dimension $h_d=50$. 
 
 Furthermore, the one-hole dispersion can be found e.g. in "one_hole/.../momentum_calculations_full_res/" for the respective system.
-<img width="595" alt="4x4_dispersion" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/360c41ce-a3c9-458a-98df-66eb6bd2e3ef">
+
