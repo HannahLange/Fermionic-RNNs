@@ -4,9 +4,10 @@
 </div>
 
 
-RNN implementation to simulate the bosonic and fermionic t-J model, or its general form, the $t$XXZ model,
-![CodeCogsEqn](https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/cd0e78a7-1213-4813-9d34-f827f56a79b7)
-
+RNN implementation to simulate the bosonic and fermionic t-J model, or its general form, the $t$-XXZ model,
+<div align="center">
+    ![CodeCogsEqn](https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/cd0e78a7-1213-4813-9d34-f827f56a79b7)
+</div>
 
 The data shown in the paper and code for 0 and 1 holes are provided in "one_hole/", for several holes in "more_holes/".
 
