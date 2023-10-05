@@ -1,0 +1,9 @@
+# Fermionic-RNNs
+
+RNN implementation to simulate the bosonic and fermionic t-J model. The data shown in the paper and code for 0 and 1 holes are provided in "one_hole/", for several holes in "more_holes/".
+
+In order to run the Code, run.py (or run_sr.py and stoch_reconfig.py), helper.py, observables.py,localenergy.py and model.py are needed. You can run the code by calling e.g.
+
+run.py -Nx 4 -Ny 4 -den 1 -t 3 -Jp 1 -Jz 1 -boundsx 0 -boundsy 0 -load 0 -antisym 0 -hd 50 -sym 0
+
+for a bosonic Nx*Ny=4*4 square lattice system with open boundaries (boundsx=boundsy=0), t=3, Jp=Jz=1 and hidden dimension hd=50.
