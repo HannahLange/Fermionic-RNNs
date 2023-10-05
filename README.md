@@ -5,7 +5,9 @@
 
 
 RNN implementation to simulate the bosonic and fermionic t-J model, or its general form, the $t$-XXZ model,
-![CodeCogsEqn](https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/80d6403d-1b5e-4b2e-88f3-204a1c8b7faa)
+
+$\mathcal{H}_{tXXZ} = -t \sum_{\langle \vec{i},\vec{j}\rangle, \sigma} \mathcal{P}_G \left( \hat{c}^{\dagger}_{\vec{i},\sigma} \hat{c}_{\vec{j},\sigma} + \mathrm{h.c.} \right) \mathcal{P}_G
++ J_z \sum_{\langle\vec{i},\vec{j}\rangle} \left( \hat{S}^z_{\vec{i}} \cdot \hat{S}^z_{\vec{j}} - \frac{1}{4} \hat{n}_{\vec{i}} \hat{n}_{\vec{i}} \right) + J_{\pm} \sum_{\langle\vec{i},\vec{j}\rangle} \frac{1}{2} \left( \hat{S}^+_{\vec{i}} \cdot \hat{S}^-_{\vec{j}} + \hat{S}^-_{\vec{i}} \cdot \hat{S}^+_{\vec{j}} \right)$. 
 
 
 
