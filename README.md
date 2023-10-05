@@ -4,7 +4,13 @@
 </div>
 
 
-RNN implementation to simulate the bosonic and fermionic t-J model. The data shown in the paper and code for 0 and 1 holes are provided in "one_hole/", for several holes in "more_holes/".
+RNN implementation to simulate the bosonic and fermionic t-J model, or its general form, the $t$XXZ model,
+\begin{align}
+        \mathcal{H}_{tXXZ}=&-t \sum_{\langle \vec{i},\vec{j}\rangle, \sigma}\mathcal{P}_G\left( \hat{c}^{\dagger}_{\vec{i},\sigma} \hat{c}_{\vec{j},\sigma}+\mathrm{h.c.}\right) \mathcal{P}_G\notag
+        \\&+J_z\sum_{\langle\vec{i},\vec{j}\rangle}\left(\hat{S}^z_{\vec{i}}\cdot \hat{S}^z_{\vec{j}}-\frac{1}{4}  \hat{n}_{\vec{i}}\hat{n}_{\vec{i}}\right) \notag \\
+        & +J_{\pm}\sum_{\langle\vec{i},\vec{j}\rangle}\frac{1}{2}\left(\hat{S}^+_{\vec{i}}\cdot \hat{S}^-_{\vec{j}}+\hat{S}^-_{\vec{i}}\cdot \hat{S}^+_{\vec{j}}\right).
+\end{align}
+The data shown in the paper and code for 0 and 1 holes are provided in "one_hole/", for several holes in "more_holes/".
 
 In order to run the Code, run.py (or run_sr.py and stoch_reconfig.py), helper.py, observables.py,localenergy.py and model.py are needed. You can run the code by calling e.g.
 
