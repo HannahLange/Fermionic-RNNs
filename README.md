@@ -6,7 +6,7 @@
 
 RNN implementation to simulate the bosonic and fermionic t-J model, or its general form, the $t$-XXZ model,
 <div align="center">
-    <img width="600" alt="Convergence Overview" src="[https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/1a4e3f1e-0280-4e79-9dad-270b6cb13d37](https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/cd0e78a7-1213-4813-9d34-f827f56a79b7)">
+    <img width="600" alt="tXXZ" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/1a4e3f1e-0280-4e79-9dad-270b6cb13d37](https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/cd0e78a7-1213-4813-9d34-f827f56a79b7">
 </div>
 
 
