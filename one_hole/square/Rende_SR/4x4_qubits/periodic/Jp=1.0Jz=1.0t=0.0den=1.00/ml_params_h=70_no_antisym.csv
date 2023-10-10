@@ -5,6 +5,6 @@ annealing_steps: 1000
 num_epochs: 20000
 max_grad: None
 learning rate: 0.001
-hidden dimension: 50
-sz total: : 0.5
+hidden dimension: 70
+sz total: : 0.0
 T0: 0.0

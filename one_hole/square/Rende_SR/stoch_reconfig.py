@@ -87,7 +87,7 @@ def run_sr(model, E, samples, optimizer, epsilon=1e-4, scheduler=None):
     """ Runs a minSR step. """
     # Campute the real and imaginary part of the jacobian matrix. 
     X, indices = compute_centered_jacobian(model, samples)
-    E = -((E-E.mean()) / np.sqrt(E.size(0)))
+    E = -2*((E-E.mean()).conj() / np.sqrt(E.size(0)))
     f = torch.cat([E.real, -E.imag])
     # Compute the gradients of the NN parameters from that.
     sparse_grads = compute_gradient_with_curvature(X, f, model, epsilon)

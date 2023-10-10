@@ -33,7 +33,7 @@ num_epochs      = 20000
 warmup_steps    = 1
 annealing_steps = 1000 #int(num_epochs/4)
 max_grad    = None
-lr          = 0.0001
+lr          = 0.001
 minSR       = True
 
 if bounds_x == bounds_y:
