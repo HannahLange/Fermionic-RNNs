@@ -12,8 +12,7 @@ In order to run the code, run.py (or run_sr.py and stoch_reconfig.py), helper.py
 
 for a bosonic $N_x\times N_y=4\times 4$ square lattice system with open boundaries (boundsx=boundsy=0), $t=3$, $J_{\pm}=J_z=1$ and hidden dimension $h_d=50$. 
 
-Furthermore, the one-hole dispersion can be found e.g. [here](Fermionic-RNNs/one_hole/square
-/momentum_calculations_full_res/) for the 4x4 system. It is calculated by enforcing a target momentum $k_\mathrm{target}$ by adding this constrain to the cost function:
+Furthermore, the one-hole dispersion can be found e.g. [here](https://github.com/HannahLange/Fermionic-RNNs/tree/main/one_hole/square/momentum_calculations_full_res) for the 4x4 system. It is calculated by enforcing a target momentum $k_\mathrm{target}$ by adding this constrain to the cost function:
 
 <div align="center">
     <img width="479" alt="Momentum_git" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/a5b90ba8-5e60-43cc-a66b-b6d8bee572a7">
