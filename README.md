@@ -7,7 +7,7 @@
 
 RNN implementation to simulate the bosonic and fermionic 2D $t-J$ model, or its general form, the $t$-XXZ model, using pytorch. The data shown in the paper (and the respective code to generate it) for 0 and 1 holes are provided [for up to one hole](https://github.com/HannahLange/Fermionic-RNNs/tree/main/one_hole), for [more than one hole]([Fermionic-RNNs/more_holes/](https://github.com/HannahLange/Fermionic-RNNs/tree/main/more_holes)).
 
-In order to run the code, run.py (or run_sr.py and stoch_reconfig.py), helper.py, observables.py,localenergy.py and model.py have to be in the same directory. Furthermore, you need to create a folder for the results, e.g. '/4x4_qubits/open/' for a system with 4x4 sites and open boundaries. You can run the code by calling e.g.
+In order to run the code, run.py (or run_sr.py and stoch_reconfig.py), helper.py, observables.py,localenergy.py and model.py have to be in the same directory. Furthermore, you need to create a folder for the results, e.g. '4x4_qubits/open' for a system with 4x4 sites and open boundaries. You can run the code by calling e.g.
 
 `run.py -Nx 4 -Ny 4 -den 1 -t 3 -Jp 1 -Jz 1 -boundsx 0 -boundsy 0 -load 0 -antisym 0 -hd 50 -sym 0`
 
