@@ -5,7 +5,7 @@ import observables as o
 from localenergy import get_Eloc, tJ2D_MatrixElements, FH2D_MatrixElements
 import os
 
-def cost_fct(samples, model, device, H, params, bounds_x, bounds_y, N, mu, mu_sz, mu_sym, sz_tot, su2_sym, N_tot, symmetry, T, antisym):
+def cost_fct(samples, model, device, H, params, bounds_x, bounds_y, mu_sym, symmetry, T, antisym):
     cost = 0
     if symmetry != None:
         Eloc, log_probs, phases, sym_samples, sym_log_probs, sym_phases = get_Eloc(H,params,samples, model, bounds_x, bounds_y, symmetry, antisym)
@@ -14,17 +14,9 @@ def cost_fct(samples, model, device, H, params, bounds_x, bounds_y, N, mu, mu_sz
         Eloc, log_probs, phases = get_Eloc(H,params,samples, model, bounds_x, bounds_y, symmetry, antisym)
     log_psi = (0.5*log_probs+1j*phases)
     eloc_sum = (Eloc).mean(axis=0)
-    e_loc_corr = (Eloc - eloc_sum)
-    if sz_tot != None and mu_sz != 0:
-        e_loc_corr += mu_sz * (torch.abs(o.get_sz_(samples, model, device))-sz_tot*torch.ones((samples.size()[0])).to(device))**2
-    if su2_sym:
-        sxRNN = o.get_sx_(samples, log_probs, phases, model, device)
-        syRNN = o.get_sy_(samples, log_probs, phases, model, device)
-        e_loc_corr += mu_sz * (torch.abs(sxRNN)-sz_tot*torch.ones((samples.size()[0])).to(device))**2
-        e_loc_corr += mu_sz * (torch.abs(syRNN)-sz_tot*torch.ones((samples.size()[0])).to(device))**2
-    if N_tot != None and mu != 0:
-        e_loc_corr += mu * (N/N_tot-torch.ones((samples.size()[0])).to(device))**2
+    e_loc_corr = Eloc - eloc_sum
     if T != None and T!= 0:
+        print(T)
         cost += 4*T*(torch.mean(torch.real(torch.conj(log_psi)*log_probs.detach().to(torch.complex128))))-torch.mean(torch.real(torch.conj(log_psi)*torch.mean(log_probs.detach().to(torch.complex128))) )
     if symmetry != None and mu_sym != 0:
         p_diff = (torch.exp(log_probs)-torch.exp(sym_log_probs))/(0.5*(torch.exp(log_probs)+torch.exp(sym_log_probs)))
@@ -45,12 +37,12 @@ def save(model, boundaries, folder, fol_extension, n_samples, device):
     # calculate the nearest neighbor spin correlators
     samples = model.sample(n_samples)
     log_probs, phases = model.log_probabilities(samples)
-    szsz = (o.get_szsz(samples, log_probs, boundaries, model, device))
-    np.save(folder+"szsz"+fol_extension+".npy", np.array(szsz))
-    sxsx = (o.get_sxsx(samples, log_probs, phases, boundaries, model, device))
-    np.save(folder+"sxsx"+fol_extension+".npy", np.array(sxsx))
-    sysy = (o.get_sysy(samples, log_probs, phases, boundaries, model, device))
-    np.save(folder+"sysy"+fol_extension+".npy", np.array(sysy))
+    #szsz = (o.get_szsz(samples, log_probs, boundaries, model, device))
+    #np.save(folder+"szsz"+fol_extension+".npy", np.array(szsz))
+    #sxsx = (o.get_sxsx(samples, log_probs, phases, boundaries, model, device))
+    #np.save(folder+"sxsx"+fol_extension+".npy", np.array(sxsx))
+    #sysy = (o.get_sysy(samples, log_probs, phases, boundaries, model, device))
+    #np.save(folder+"sysy"+fol_extension+".npy", np.array(sysy))
 
 
 def initialize_torch():
@@ -63,10 +55,9 @@ def initialize_torch():
     else:
         device = torch.device("cpu")
         print("GPU not available, CPU used")
-
+    torch.manual_seed(1234)
     random.seed(1234)
     np.random.seed(0)
-    torch.manual_seed(1234)
     return device
 
 
@@ -85,9 +76,10 @@ def parse_input(parser, H):
     parser.add_argument("-load", "--load_model", type=int , default = 1 , help="load previous model if 1")
     parser.add_argument("-sym", "--sym", type=float , default = 1 , help="enforces symmetries if 1")
     parser.add_argument("-antisym", "--antisym", type=float , default = 1 , help="antisymmetry if  1")
+    parser.add_argument("-hd", "--hd", type=int , default = 50 , help="hidden dimension")
     args = parser.parse_args()
     print(args)
-
+    hiddendim = args.hd
     Jp         = args.Jp
     Jz         = args.Jz
     U          = args.U
@@ -104,17 +96,14 @@ def parse_input(parser, H):
             sym     = "C4"
         else:
             sym = "C2"
-        su2_sym = False
         print("Enforce symmetries: C4 and Sz_tot = "+str(sz_tot))
     else:
         sym     = None
-        su2_sym = False
-        sz_tot  = None
     b_dict = {1: "open", 0: "periodic"}
     if args.bounds == 0:
         args.boundx = 0
         args.boundy = 0
-    return {"U": U, "t": t, "Jp": Jp, "Jz": Jz}, density, Nx, Ny, b_dict[args.boundsx], b_dict[args.boundsy], {1: True, 0: False}[args.load_model], sz_tot, sym, su2_sym, antisym
+    return {"U": U, "t": t, "Jp": Jp, "Jz": Jz}, density, Nx, Ny, b_dict[args.boundsx], b_dict[args.boundsy], {1: True, 0: False}[args.load_model], sz_tot, sym, antisym, hiddendim
 
 
 def save_params(params, folder, fol_ext):

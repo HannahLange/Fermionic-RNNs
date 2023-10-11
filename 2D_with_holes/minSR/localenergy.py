@@ -17,11 +17,14 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device
     Nx         = samples_.size()[1]
     Ny         = samples_.size()[2]
     numsamples = samples_.size()[0]
-    if length_x == Nx or length_y == Ny:
+    if length_x == Nx and length_y == Ny:
         l = Nx*Ny*2
+    elif length_x == Nx:
+        l = Nx*Ny*2-Nx
+    elif length_y == Ny:
+        l = Nx*Ny*2-Ny
     else:
         l = (Nx*Ny*2-(Nx+Ny))
-
     # ---------- hopping term ----------------
 
     matrixelements = torch.zeros((numsamples, l), dtype=dtype, device=device)
@@ -95,7 +98,6 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device
                         signs[num] = P*np.pi
 
                     num += 1
-
     # ---------- S_i* S_j term ---------------
     #diagonal elements
     diag_matrixelements = torch.zeros((numsamples), dtype=dtype, device=device) 
@@ -161,9 +163,8 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device
                 offd_matrixelements[:,num] = valuesT.reshape((numsamples))*Jp*0.5
                 xprime[num,:]              = new_samples
                 num +=1
-    
+
     # ---------- n_i*n_j  ----------------
-    
     for i in range(Nx):
         for j in range(Ny):
             if i != length_x:

@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device):
+def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device, dtype=torch.float32):
     """ 
     Calculate the local energies of 2D t-J model given a set of set of samples.
     Returns: The local energies that correspond to the input samples.
@@ -17,16 +17,19 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device
     Nx         = samples_.size()[1]
     Ny         = samples_.size()[2]
     numsamples = samples_.size()[0]
-    if length_x == Nx or length_y == Ny:
+    if length_x == Nx and length_y == Ny:
         l = Nx*Ny*2
+    elif length_x == Nx:
+        l = Nx*Ny*2-Nx
+    elif length_y == Ny:
+        l = Nx*Ny*2-Ny
     else:
         l = (Nx*Ny*2-(Nx+Ny))
-
     # ---------- hopping term ----------------
 
-    matrixelements = torch.zeros((numsamples, l)).to(device)
-    xprime_t = torch.zeros((l,numsamples, Nx, Ny)).to(device)
-    signs = torch.zeros((l,numsamples)).to(device)
+    matrixelements = torch.zeros((numsamples, l), dtype=dtype, device=device)
+    xprime_t = torch.zeros((l,numsamples, Nx, Ny), dtype=dtype, device=device)
+    signs = torch.zeros((l,numsamples), dtype=dtype, device=device)
     num = 0
     samples = samples_.detach().clone()
     samples[samples_==1] = -1
@@ -67,7 +70,7 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device
                     # Here I have to take care of the sign changes!
                     # 1. hopping in x direction means that I will have to 
                     # exchange particles to restore the order
-                    P = torch.zeros((numsamples)).to(device)
+                    P = torch.zeros((numsamples), dtype=dtype, device=device)
                     if antisym:
                         if j % 2 == 0: #go from left to right    
                             for i2 in range(i+1,Nx):
@@ -95,10 +98,9 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device
                         signs[num] = P*np.pi
 
                     num += 1
-
     # ---------- S_i* S_j term ---------------
     #diagonal elements
-    diag_matrixelements = torch.zeros((numsamples)).to(device) 
+    diag_matrixelements = torch.zeros((numsamples), dtype=dtype, device=device) 
     #diagonal elements from the SzSz term 
     for i in range(Nx): 
         for j in range(Ny):
@@ -125,8 +127,8 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device
 
     
     #off-diagonal elements from the S+S- terms
-    offd_matrixelements = torch.zeros((numsamples, l)).to(device)
-    xprime = torch.zeros((l, numsamples, Nx, Ny)).to(device)
+    offd_matrixelements = torch.zeros((numsamples, l), dtype=dtype, device=device)
+    xprime = torch.zeros((l, numsamples, Nx, Ny), dtype=dtype, device=device)
     num = 0
     
     for i in range(Nx): 
@@ -161,9 +163,8 @@ def tJ2D_MatrixElements(Jp, Jz, t, samples_, length_x, length_y, antisym, device
                 offd_matrixelements[:,num] = valuesT.reshape((numsamples))*Jp*0.5
                 xprime[num,:]              = new_samples
                 num +=1
-    
+
     # ---------- n_i*n_j  ----------------
-    
     for i in range(Nx):
         for j in range(Ny):
             if i != length_x:
@@ -237,33 +238,32 @@ def get_Eloc(model, parameters, samples, RNN, boundaries_x, boundaries_y, symmet
 
     offd_me = offd_me.to(torch.complex64)
     # diagonal elements
-    Eloc = diag_me.to(torch.complex64)
+    Eloc = diag_me.to(torch.complex128)
 
     length = new_samples.size()[0]
     # pass all samples together through the network
     if symmetry!= None:
         symmetric_samples = get_symmetric_samples(samples, symmetry, device)
-        queue_samples = torch.zeros(((length+1+1), numsamples, Nx, Ny), dtype = torch.int32).to(device) 
+        queue_samples = torch.zeros(((length+1+1), numsamples, Nx, Ny), dtype=torch.int32, device=device) 
         queue_samples[length+1] = symmetric_samples
     else:
-        queue_samples = torch.zeros(((length+1), numsamples, Nx, Ny), dtype = torch.int32).to(device)  
+        queue_samples = torch.zeros(((length+1), numsamples, Nx, Ny), dtype=torch.int32, device=device)  
     #Eloc2 = diag_me.to(torch.complex64)
     queue_samples[0] = samples
     queue_samples[1:length+1] = new_samples
     queue_samples_reshaped = torch.reshape(queue_samples, [queue_samples.size()[0]*numsamples, Nx, Ny])
     log_probs, phases = RNN.log_probabilities(queue_samples_reshaped.to(torch.int64))
-    log_probs_reshaped = torch.reshape(log_probs, (queue_samples.size()[0],numsamples)).to(torch.complex64)
+    log_probs_reshaped = torch.reshape(log_probs, (queue_samples.size()[0],numsamples))
     phases_reshaped = torch.reshape(phases, (queue_samples.size()[0],numsamples))
     # add the signs due to fermonic exchange
     if t!= 0 and model == "tJ":
         phases_reshaped[int(length/2+1):length+1,:] = signs + phases_reshaped[int(length/2+1):length+1,:]
     for i in range(1,(length+1)):
-        tot_log_probs = 0.5*(log_probs_reshaped[i,:]-log_probs_reshaped[0,:]).to(torch.complex64)
-        tot_log_probs += 1j*(phases_reshaped[i,:]-phases_reshaped[0,:])
-        Eloc += offd_me[:,i-1]*(torch.exp(tot_log_probs))
+        log_ampl = 0.5*(log_probs_reshaped[i,:]-log_probs_reshaped[0,:])
+        phase    = (phases_reshaped[i,:]-phases_reshaped[0,:])
+        Eloc += offd_me[:,i-1]*(torch.exp(torch.complex(log_ampl, phase)))
         #Eloc2 += offd_me[:,i-1]
     #print(samples[0])
-    #print(Eloc2[0])
     if symmetry != None:
         return Eloc, log_probs_reshaped[0], phases_reshaped[0], symmetric_samples, log_probs_reshaped[length+1], phases_reshaped[length+1]
     else:

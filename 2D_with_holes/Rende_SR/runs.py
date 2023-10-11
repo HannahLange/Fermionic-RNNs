@@ -14,10 +14,10 @@ if bounds_x == bounds_y:
     bounds = {1:"open",0:"periodic"}[bounds_x]
 else:
     bounds = {1:"open",0:"periodic"}[bounds_x]+"_"+{1:"open",0:"periodic"}[bounds_y]
-load_data = 0
+load_data = 1
 antisym = 0
 
-for hiddendim in [100]: #10,20,30,50,70]:
+for hiddendim in [70]: #10,20,30,50,70]:
     for density in [1-1/(Nx*Ny)]: #,1-4/(Nx*Ny),1-6/(Nx*Ny), 1-8/(Nx*Ny)]: #, 1-1/(Nx*Ny),1-2/(Nx*Ny), 1-3/(Nx*Ny)]:
         fol = str(Nx)+"x"+str(Ny)+"_qubits/"+bounds+"/Jp="+str(float(Jp))+"Jz="+str(float(Jz))+"t="+str(float(t))+"den="+"{:.2f}".format(density)+"/"
         print(fol)

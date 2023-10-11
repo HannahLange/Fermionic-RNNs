@@ -119,7 +119,6 @@ while epoch <= num_epochs:
         print("Start Stochastic Reconfiguration.")
         optimizer = torch.optim.SGD(model.parameters(), lr=lr, maximize=True)
     if epoch < warmup_steps+1 or not minSR:
-        print(T)
         Elocs, cost, log_probs, phases, p_diffs  = cost_fct(samples, model, device, H, params, bounds_x, bounds_y,  mu_sym_log, sym, T, antisym)
         optimizer.zero_grad()
         cost.backward() # Does backpropagation and calculates gradients

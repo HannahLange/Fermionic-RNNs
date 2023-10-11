@@ -16,6 +16,7 @@ def cost_fct(samples, model, device, H, params, bounds_x, bounds_y, mu_sym, symm
     eloc_sum = (Eloc).mean(axis=0)
     e_loc_corr = Eloc - eloc_sum
     if T != None and T!= 0:
+        print(T)
         cost += 4*T*(torch.mean(torch.real(torch.conj(log_psi)*log_probs.detach().to(torch.complex128))))-torch.mean(torch.real(torch.conj(log_psi)*torch.mean(log_probs.detach().to(torch.complex128))) )
     if symmetry != None and mu_sym != 0:
         p_diff = (torch.exp(log_probs)-torch.exp(sym_log_probs))/(0.5*(torch.exp(log_probs)+torch.exp(sym_log_probs)))
@@ -36,12 +37,12 @@ def save(model, boundaries, folder, fol_extension, n_samples, device):
     # calculate the nearest neighbor spin correlators
     samples = model.sample(n_samples)
     log_probs, phases = model.log_probabilities(samples)
-    szsz = (o.get_szsz(samples, log_probs, boundaries, model, device))
-    np.save(folder+"szsz"+fol_extension+".npy", np.array(szsz))
-    sxsx = (o.get_sxsx(samples, log_probs, phases, boundaries, model, device))
-    np.save(folder+"sxsx"+fol_extension+".npy", np.array(sxsx))
-    sysy = (o.get_sysy(samples, log_probs, phases, boundaries, model, device))
-    np.save(folder+"sysy"+fol_extension+".npy", np.array(sysy))
+    #szsz = (o.get_szsz(samples, log_probs, boundaries, model, device))
+    #np.save(folder+"szsz"+fol_extension+".npy", np.array(szsz))
+    #sxsx = (o.get_sxsx(samples, log_probs, phases, boundaries, model, device))
+    #np.save(folder+"sxsx"+fol_extension+".npy", np.array(sxsx))
+    #sysy = (o.get_sysy(samples, log_probs, phases, boundaries, model, device))
+    #np.save(folder+"sysy"+fol_extension+".npy", np.array(sysy))
 
 
 def initialize_torch():
@@ -75,9 +76,10 @@ def parse_input(parser, H):
     parser.add_argument("-load", "--load_model", type=int , default = 1 , help="load previous model if 1")
     parser.add_argument("-sym", "--sym", type=float , default = 1 , help="enforces symmetries if 1")
     parser.add_argument("-antisym", "--antisym", type=float , default = 1 , help="antisymmetry if  1")
+    parser.add_argument("-hd", "--hd", type=int , default = 50 , help="hidden dimension")
     args = parser.parse_args()
     print(args)
-
+    hiddendim = args.hd
     Jp         = args.Jp
     Jz         = args.Jz
     U          = args.U
@@ -101,7 +103,7 @@ def parse_input(parser, H):
     if args.bounds == 0:
         args.boundx = 0
         args.boundy = 0
-    return {"U": U, "t": t, "Jp": Jp, "Jz": Jz}, density, Nx, Ny, b_dict[args.boundsx], b_dict[args.boundsy], {1: True, 0: False}[args.load_model], sz_tot, sym, antisym
+    return {"U": U, "t": t, "Jp": Jp, "Jz": Jz}, density, Nx, Ny, b_dict[args.boundsx], b_dict[args.boundsy], {1: True, 0: False}[args.load_model], sz_tot, sym, antisym, hiddendim
 
 
 def save_params(params, folder, fol_ext):

@@ -27,14 +27,14 @@ N_tot  = int(Nx*Ny*density)
 # Define hyperparameters
 n_samples   = 1000
 batchsize   = 2000
-T0          = 0
+T0          = 0.0
 mu_sym      = 1
-num_epochs      = 10000
-warmup_steps    = 0
-annealing_steps = int(num_epochs/4)
+num_epochs      = 20000
+warmup_steps    = 1
+annealing_steps = 1000 #int(num_epochs/4)
 max_grad    = None
-lr          = 0.0001
-minSR       = False
+lr          = 0.001
+minSR       = True
 
 if bounds_x == bounds_y:
     bounds = bounds_x
@@ -76,10 +76,10 @@ if load_model:
     if os.path.exists(fol+"model_params"+fol_ext+".pt"):
         print("load "+fol+"model_params"+fol_ext+".pt")
         model.load_state_dict(torch.load(fol+"model_params"+fol_ext+".pt")) 
-        fol_ext = "2"
+        T0 = 0
+        fol_ext += "_2"
         num_epochs = 10000
         annealing_steps  = 1000
-        warmup_steps = 0
         #lr = lr/1000
 
 
@@ -96,7 +96,7 @@ while epoch <= num_epochs:
     start = timeit.default_timer()
 
     # for the cost function
-    if T0 != None and epoch > warmup_steps: T = max(T0*(1-(epoch-warmup_steps)/1000), 0)
+    if T0 != None and epoch > warmup_steps: T = max(T0*(1-(epoch-warmup_steps)/annealing_steps), 0)
     elif T0 != None and epoch < warmup_steps: T = T0
     else: T = None
     sym = None
@@ -104,9 +104,8 @@ while epoch <= num_epochs:
     if epoch > warmup_steps+annealing_steps:
         sym = sym_
         mu_sym_log = np.log10(1+9*(epoch-(warmup_steps+annealing_steps))/5000)*mu_sym
-        for i in range(len(optimizer.param_groups)):
-            optimizer.param_groups[i]['lr'] = lr/np.sqrt(1+(epoch-(warmup_steps+annealing_steps))/500)
-
+        optimizer.param_groups[0]['lr'] = lr/np.sqrt(1+(epoch-(warmup_steps+annealing_steps))/500)
+    
     # loop through batches
     batchsize = min(batchsize,n_samples)
     samples = []
@@ -117,14 +116,11 @@ while epoch <= num_epochs:
     N = o.get_particle_no(samples, model, device).detach().mean()
     if minSR and epoch == warmup_steps+1:
         print("Start Stochastic Reconfiguration.")
-        optimizer = torch.optim.SGD(model.parameters(), lr=lr, maximize=True)
+        optimizer = torch.optim.Adam(model.parameters(), lr=lr, maximize=True)
     if epoch < warmup_steps+1 or not minSR:
-        print(T)
         Elocs, cost, log_probs, phases, p_diffs  = cost_fct(samples, model, device, H, params, bounds_x, bounds_y,  mu_sym_log, sym, T, antisym)
         optimizer.zero_grad()
-        cost.backward() # Does backpropagation and calculates gradients
-        grads = torch.cat([it.flatten() for it in filter(lambda x: x.requires_grad, model.parameters())])
-        print(torch.linalg.norm(grads))
+        cost.backward(retain_graph=True) # Does backpropagation and calculates gradients
         optimizer.step()
         inversion_error = None
         tdvp_error = None
@@ -138,9 +134,14 @@ while epoch <= num_epochs:
         if epoch == 1:
             cost.backward(retain_graph=True)
         model.zero_grad()
-        if epoch <= warmup_steps + 1000: diag_offset = 1e-4
-        else: diag_offset = 1e-4/(1+(epoch-warmup_steps)/1000)
-        cost, inversion_error, tdvp_error = run_sr(model,Elocs,samples,optimizer,diag_offset) # Updates the weights accordingly
+        diag_offset = min(1,max(1/(np.exp((epoch)/100)),1e-12))
+        if epoch <= annealing_steps: diag_offset = 1
+        else: diag_offset = min(1,max(1/(np.exp((epoch-annealing_steps)/1000)),1e-10))
+        cost, M = run_sr(model,Elocs,samples,optimizer,diag_offset) # Updates the weights accordingly
+        if epoch == warmup_steps+1:
+            Meigh, _ = torch.linalg.eigh(M)
+            print(Meigh)
+            np.save(fol+"/Meigh"+fol_ext+".npy", Meigh.detach().cpu())
     Eloc = Elocs.mean()
     Eloc_var = (Elocs).var(axis=0)
     model.zero_grad()
@@ -153,7 +154,6 @@ while epoch <= num_epochs:
         print('Epoch: {}/ {}/ t/epoch={}.............'.format(epoch, num_epochs, round(end-start,2)), end=' ')
         print("Loss: {:.8f}".format(cost)+", mean(E): {:.8f}".format(Eloc)+", var(E): {:.8f}".format(Eloc_var))
         if p_diffs != None: print("    Deltap_sym: {:.8f}".format(p_diffs))
-        if inversion_error != None: print("    inversion error:"+str(inversion_error.detach().cpu().numpy())+", tdvp error:"+str(tdvp_error.detach().cpu().numpy()))
     if epoch == warmup_steps+annealing_steps or epoch == warmup_steps:
         # ----------- save -----------------------------------
         save(model, bounds, fol,fol_ext, n_samples, device)
