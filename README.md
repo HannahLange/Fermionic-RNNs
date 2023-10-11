@@ -15,5 +15,5 @@ for a bosonic $N_x\times N_y=4\times 4$ square lattice system with open boundari
 Furthermore, the one-hole dispersion can be found e.g. in "one_hole/.../momentum_calculations_full_res/" for the respective system. It is calculated by enforcing a target momentum $k_\mathrm{target}$ by adding this constrain to the cost function:
 
 <div align="center">
-    <img width="594" alt="Momentum" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/fc74618d-c286-42be-9675-8b23fea5e304">
+    <img width="479" alt="Momentum_git" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/a5b90ba8-5e60-43cc-a66b-b6d8bee572a7">
 </div>
