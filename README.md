@@ -1,6 +1,6 @@
 # Fermionic RNNs and NQS quasiparticle dispersions
 <div align="center">
-    <img width="644" alt="RNN_architecture" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/00e67999-cf2b-4da4-b307-4eec2a4eda65">
+    <img width="444" alt="RNN_architecture" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/00e67999-cf2b-4da4-b307-4eec2a4eda65">
 </div>
 
 
