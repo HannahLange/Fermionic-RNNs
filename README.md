@@ -18,3 +18,5 @@ Furthermore, the one-hole [dispersions](https://github.com/HannahLange/Fermionic
 <div align="center">
     <img width="479" alt="Momentum_git" src="https://github.com/HannahLange/Fermionic-RNNs/assets/82364625/f899bb40-fa28-4569-a13d-583eb30cafa8">
 </div>
+
+The RNN implementation is based on [Hibat-Allah et al. (2020)](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.2.023358), see also their [Git repository](https://github.com/mhibatallah/RNNWavefunctions).
